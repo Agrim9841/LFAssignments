@@ -53,7 +53,7 @@ section{
     padding-bottom: 10px;
 }
 
-.table{
+.tableContainer{
     width: 100%;
     margin-top: 20px;
     border: 5px solid rgb(0,0,90);
@@ -61,6 +61,22 @@ section{
     background-color: white;
     overflow: hidden;
     box-shadow: -5px 10px 5px rgba(0,0,0,0.4), inset -5px 10px 5px rgba(0,0,0,0.4);
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead{
+    color: white;
+    font-weight: bold;
+    background-color: rgba(0,0,0,0.7);
+    border-right: 1px solid rgba(255,255,255,0.7);
+}
+
+.tableRow{
+    width: 100%;
 }
 
 .tableRow:nth-child(odd){
@@ -75,34 +91,24 @@ section{
     background-color: rgba(0,0,0,0.1);
 }
 
-.tableHead, .tableRow{
-    width: 100%;
-    display: flex;
-}
-
-.tableHead{
-    color: white;
-    font-weight: bold;
-    background-color: rgba(0,0,0,0.7);
-    border-right: 1px solid rgba(255,255,255,0.7);
-}
-
 .tableCol1{
-    flex: 0.1;
+    width: 0.1;
     text-align: center;
 }
 
 .tableCol4, .tableCol5{
-    flex: 0.1;
+    width: 0.1;
     text-align: center;
 }
 
 .tableCol2{
-    flex: 0.25;
+    width: 0.25;
+    text-align: left;
 }
 
 .tableCol3{
-    flex: 0.45;
+    width: 0.45;
+    text-align: left;
 }
 
 .tableCol1, .tableCol2, .tableCol3, .tableCol4, .tableCol5{
