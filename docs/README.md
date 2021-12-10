@@ -1,3 +1,4 @@
 # LFAssignment
-This is a test repository created for the assignment given in the LF Internship.
-https://agrim9841.github.io/LFAssignments/
+Link: https://agrim9841.github.io/LFAssignments/
+
+The webpage consists of all the links to the repo and demo of the projects completed during the course of the internship in LeapFrog.
