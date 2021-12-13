@@ -1,0 +1,509 @@
+/* The container that contains the header, navbar, mainbody and footer */
+.container{
+    width: 938px;
+    margin: auto;
+}
+
+
+/* CSS for all Header Elements */
+header{
+    width: 100%;
+    height: 85px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.logo-container{
+    height: 53px;
+    width: 223px;
+    margin-right: 24px;
+    float: left;
+}
+
+.logo{
+    height: 100%;
+    width: 100%;
+}
+
+.searchbar-container{
+    margin-top: 23px;
+    height: 20px;
+    width: 340px;
+    float: left;
+}
+
+.searchbar{
+    width: 276px;
+    height: 20px;
+    float: left;
+}
+
+.searchbar-leftborder{
+    float: left;
+    width: 6px;
+    height: 20px;
+}
+
+.searchbar-rightborder{
+    float: left;
+    width: 6px;
+}
+
+.searchbar-leftborder .top, .searchbar-leftborder .bottom,
+.searchbar-rightborder .top, .searchbar-rightborder .bottom{
+    height: 6px;
+    width: 6px;
+    background-image: url("../images/Header-Searchbar-Corner.png");
+    background-size: contain;
+}
+
+.searchbar-leftborder .middle, .searchbar-rightborder .middle{
+    height: 8px;
+    width: 6px;
+    background-color: #CAEFF7;
+}
+
+.searchbar-body{
+    float: left;
+    width: 264px;
+    height: 20px;
+}
+
+.searchbar-leftborder .bottom{
+    transform: rotate(-90deg);
+}
+
+.searchbar-rightborder .top{
+    transform: rotate(90deg);
+}
+
+.searchbar-rightborder .bottom{
+    transform: rotate(180deg);
+}
+
+.search-input{
+    float: left;
+    padding-top: 4px;
+    color: #869494;
+    background-color: transparent;
+    border: none;
+    font-size: 10px;
+    width: 234px;
+    outline: 0px;
+}
+
+.magnifying-glass{
+    cursor: pointer;
+    float: right;
+    height: 14px;
+    width: 13px;
+    margin-top: 3px;
+}
+
+.searchbar .separator{
+    float: right;
+    height: 20px;
+    width: 1px;
+    background-color: #7DD9E8;
+    margin: 0 2px;
+}
+
+.cross{
+    cursor: pointer;
+    float: right;
+    height: 14px;
+    width: 12px;
+    margin-top: 3px;
+}
+
+.searchbutton{
+    width: 53px;
+    height: 20px;
+    float: right;
+}
+
+.searchbutton-leftborder{
+    float: left;
+    width: 6px;
+    height: 20px;
+}
+
+.searchbutton-rightborder{
+    float: left;
+    width: 6px;
+}
+
+.searchbutton-leftborder .top, .searchbutton-leftborder .bottom,
+.searchbutton-rightborder .top, .searchbutton-rightborder .bottom{
+    height: 6px;
+    width: 6px;
+    background-image: url("../images/Header-Searchbutton-Corner.png");
+    background-size: contain;
+}
+
+.searchbutton-leftborder .middle, .searchbutton-rightborder .middle{
+    height: 8px;
+    width: 6px;
+    background-color: #274F57;
+}
+
+.searchbutton-body{
+    float: left;
+    width: auto;
+    height: 20px;
+}
+
+.searchbutton-leftborder .bottom{
+    transform: rotate(-90deg);
+}
+
+.searchbutton-rightborder .top{
+    transform: rotate(90deg);
+}
+
+.searchbutton-rightborder .bottom{
+    transform: rotate(180deg);
+}
+
+.userdetail-container{
+    float: right;
+    width: 200px;
+    margin: 5px 0px;
+}
+
+.username{
+    float: right;
+}
+
+.userlinks{
+    float: right;
+}
+
+
+ /* Css for Navbar  */
+nav{
+    height: 40px;
+    margin-bottom: 30px;
+}
+
+nav .container{
+    margin-bottom: 30px;
+    padding: 12px 0px;
+    padding-left: 9px;
+}
+
+.navlinks{
+    float: left;
+}
+
+.navlinks > .link{
+    float: left;
+    padding-right: 31px;
+}
+
+.nav-notifications{
+    float: right;
+}
+
+.nav-notifications .link{
+    float: right;
+    font-size: 12px;
+}
+
+.nav-notifications .link:first-child{
+    padding-left: 30px;
+}
+
+.nav-notifications .link-text{  
+    position: relative;
+    top: -5px;
+    padding: 5px 0px;
+    padding-left: 7px;
+    color: grey;
+}
+
+.link:hover .link-text{
+    color: black;
+}
+
+/* Main Body CSS */
+.pagebody{
+    margin-bottom: 32px;
+}
+.pagebody .container{
+    height: auto;
+}
+
+.container-block{
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+}
+
+/* All CSS for Right side nav */
+.sidenav-left{
+    float: left;
+    width: 194px;
+    height: 100%;
+}
+
+.sidenav-left h2, .sidenav-right h2{
+    height: 42px;
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 15px;
+}
+
+.sidenav-left a{
+    width: 80%;
+}
+
+.sidenavlinks img, .sidenavlinks .sidenav-burger{
+    float: right;
+}
+
+.sidenavlinks .sidenav-burger{
+    height: 11px;
+    width: 18px;
+    background-image: url("../images/Sidenav-buger-grey.png");
+}
+
+.link:hover .sidenav-burger{
+    background-image: url("../images/Sidenav-buger-white.png");
+}
+
+/* All CSS for Right side nav */
+.sidenav-right{
+    float: right;
+    width: 176px;
+    height: 100%;
+}
+
+ /* CSS for Entries */
+.entries{
+    float: left;
+    width: 568px;
+    background-color: white;
+    padding: 0px 26px;
+}
+
+.entries-nav{
+    height: 67px;
+    border-bottom: 2px solid #2FC1DA;
+}
+
+.entries-nav-all{
+    float: left;
+    width: 258px;
+}
+
+.entries-nav-border{
+    float: left;
+    height: 65px;
+    width: 10px;
+}
+
+.entries-nav-border .top{
+    height: 14px;
+    width: 10px;
+    background-image: url("../images/Entities-Main-Navigation-Border.png");
+}
+
+.entries-nav-border .bottom{
+    background-color: #F5F5F5;
+    height: 51px;
+    width: 10px;
+}
+
+.entries-nav-border-fit{
+    float: left;
+    background-color: #F5F5F5;
+    height: 65px;
+    width: 10px;
+}
+
+.entries-nav-body{
+    float: left;
+    width: 237px;
+    height: 65px;
+    background-color: #F5F5F5;
+    text-align: center;
+    padding-top: 13px;
+    position: relative;
+}
+
+.entities-subnav-right{
+    height: 28px;
+    width: 114px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    cursor: pointer;
+}
+
+.entities-subnav-left{
+    height: 28px;
+    width: 114px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    cursor: pointer;
+}
+
+.entries-subnav-left-border, .entries-subnav-right-border{
+    float: left;
+    height: 28px;
+    width: 13px;
+}
+
+.entries-subnav-left-border .top{
+    height: 13px;
+    width: 13px;
+    background-image: url("../images/Entities-Sub-Navigation-Border-Grey.png");
+}
+
+.entries-subnav-right-border .top{
+    height: 13px;
+    width: 13px;
+    transform: rotate(90deg);
+    background-image: url("../images/Entities-Sub-Navigation-Border-Grey.png");
+}
+
+.entries-subnav-left-border .bottom, .entries-subnav-right-border .bottom{
+    background-color: #DDDDDD;
+    height: 15px;
+    width: 13px;
+}
+
+.entries-subnav-body{
+    font-size: 10px;
+    padding-top: 8px;
+    float: left;
+    height: 28px;
+    width: 88px;
+    background-color: #DDDDDD;
+}
+
+.entries-nav-subscribed{
+    float: right;
+    width: 258px;
+}
+
+.entries-nav-subscribed *{
+    float: right;
+}
+
+.entries-nav-subscribed .entries-nav-border .top{
+    transform: rotateY(180deg);
+}
+
+.entries-card{
+    width: 518px;
+    display: inline-block;
+    border-bottom: 2px solid #F5F5F5;
+    padding: 15px 0px;
+}
+
+.entries-card-image{
+    height: 70px;
+    width: 70px;
+    float: left;
+    margin-right: 10px;
+}
+
+.entries-card-image img{
+    height: 100%;
+    width: 100%;
+}
+
+ .entries-card-body{
+    float: left;
+    font-size: 12px;
+}
+
+.entries-card-title{
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: bolder;
+}
+
+.entries-card-details{
+    margin-top: 5px;
+}
+
+.card-status-new{
+    color: #2FC1DA;
+    font-weight: bold;
+}
+
+.card-status-danger{
+    color: #D3401E;
+    font-weight: bold;
+}
+
+.card-author-name{
+    color: #2FC1DA;
+}
+
+.card-date{
+    border-left: 1px solid black;
+    padding-left:5px;
+    margin-left: 4px;
+}
+
+.card-status-subscribed{
+    color: #6E971F;
+    border-left: 1px solid black;
+    padding-left:5px;
+    margin-left: 4px;
+}
+
+.entries-card-collection{
+    margin-top: 5px;
+}
+
+.entries-collection-name{
+    color: #2FC1DA;
+}
+
+.entries-nav-subscribed .entries-subnav-right-border .top{
+    transform: rotate(0deg);
+}
+
+.entries-nav-subscribed .entries-subnav-left-border .top{
+    transform: rotate(90deg);
+}
+
+.entities-subnav-right:hover .entries-subnav-body, .entities-subnav-left:hover .entries-subnav-body{
+    background-color: #2FC1DA;
+    color: white;
+}
+
+.entities-subnav-right:hover .bottom, .entities-subnav-left:hover .bottom{
+    background-color: #2FC1DA;
+}
+
+.entities-subnav-right:hover .top, .entities-subnav-left:hover .top{
+    background-image: url("../images/Entities-Sub-Navigation-Border-Blue.png");
+}
+
+h1{
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+
+
+
+/* CSS for Footer */
+footer{
+    height: 45px;
+}
+
+.footerlinks{
+    float: left;
+}
+
+.copyright{
+    float: right;
+}

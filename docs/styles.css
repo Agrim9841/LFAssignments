@@ -84,22 +84,22 @@ thead{
 }
 
 .tableCol1{
-    width: 0.1;
+    width: 0.1%;
     text-align: center;
 }
 
 .tableCol4, .tableCol5{
-    width: 0.1;
+    width: 0.1%;
     text-align: center;
 }
 
 .tableCol2{
-    width: 0.25;
+    width: 0.25%;
     text-align: left;
 }
 
 .tableCol3{
-    width: 0.45;
+    width: 0.45%;
     text-align: left;
 }
 
