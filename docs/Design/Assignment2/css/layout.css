@@ -394,7 +394,7 @@ nav .container{
     float: right;
 }
 
-.entries-nav-border .top{
+.entries-nav-subscribed .entries-nav-border .top{
     transform: rotateY(180deg);
 }
 
