@@ -1,0 +1,136 @@
+header{
+    background-color: #7DD9E8;
+}
+
+header .container{
+    background-color: #7DD9E8;
+}
+
+.searchbar-body{
+    background-color: #CAEFF7;
+}
+
+.searchbutton{
+    outline: none;
+    background-color: transparent;
+    border: 0px;
+    cursor: pointer;
+}
+
+.searchbutton-body{
+    background-color: #274F57;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding-top: 5px;
+}
+
+.username{
+    font-size: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.userlinks .link{
+    font-size: 12px;
+    color: black;
+    text-decoration: none;
+    float: right;
+}
+
+.userlinks .separator{
+    float: right;
+    display: block;
+    width: 1px;
+    height: 11px;
+    background-color: black;
+    margin: 0px 4px;
+}
+
+nav, nav .container{
+    background-color: #F5F5F5;
+}
+
+.navlinks a{
+    font-size: 12px;
+    color: black;
+    text-decoration: none;
+}
+
+.container-block{
+    background-color: #F5F5F5;
+}
+
+.sidenav-left{
+    background-color: #F5F5F5;
+}
+
+.sidenav-right h2, .sidenav-left h2{
+    background-color: #2FC1DA;
+    color: white;
+}
+
+.sidenav-right{
+    background-color: #F5F5F5;
+}
+
+.sidenavlinks{
+    width: 100%;
+    background-color: #F5F5F5;
+}
+
+.sidenavlinks .link{
+    padding-top: 15px;
+    padding-right: 12px;
+    padding-left: 12px;
+    padding-bottom: 11px;
+    background-color: #F5F5F5;
+}
+
+.sidenavlinks .link:hover{
+    background-color: white;
+}
+
+.sidenavlinks a{
+    display: block;
+    font-size: 12px;
+    color: black;
+    text-decoration: none;
+}
+
+footer{
+    background-color: #727272;
+    color: white;
+    font-size: 12px;
+}
+
+footer .container{
+    background-color: #727272;
+    padding: 16px 0px;
+}
+
+.footerlinks a{
+    color: white;
+}
+
+.footerlinks .link{
+    padding-bottom: 7px;
+}
+
+/* For small screen and laptops */
+@media screen and (min-width: 680px){
+    .userlinks .separator{
+        margin: 0px 7px;
+    }
+
+    .footerlinks .link{
+        margin-left: 17px;
+        float: left;
+        list-style: disc;
+        padding: 0px;
+    }
+
+    .footerlinks .link:first-child{
+        list-style: none;
+    }
+}
