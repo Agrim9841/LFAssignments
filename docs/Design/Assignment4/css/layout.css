@@ -1,0 +1,260 @@
+nav{
+    width: 100%;
+    background-color: #FFFFFF;
+    position: fixed;
+    top: 0;
+}
+
+.container{
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
+}
+
+nav .container{
+    position: relative;
+    z-index: 20;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.logo-container{
+    float: left;
+    height: 30px;
+}
+
+.logo{
+    width: 100%;
+    height: 100%;
+}
+
+.hamburger{
+    float: right;
+    height: 30px;
+    margin-left: 17px;
+    cursor: pointer;
+    width: 40px;
+    position: relative;
+}
+
+.line1, .line2, .line3{
+    height: 10%;
+    width: 90%;
+    position: absolute;
+    background-color: #4C5D73;
+    transition-duration: 0.5s;
+    border-radius: 10px;
+}
+
+.hamburger .line1{
+    top: 20%;
+    left: 5%;
+}
+
+.hamburger .line2{
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+}
+
+.hamburger .line3{
+    bottom: 20%;
+    left: 5%;
+}
+
+.cross .line1{
+    width: 100%;
+    transform: translate(0%, -50%) rotate(45deg);
+    top: 50%;
+}
+
+.cross .line2{
+    opacity: 0;
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+}
+
+.cross .line3{
+    width: 100%;
+    transform: translate(0%, -50%) rotate(-45deg);
+    top: 50%;
+}
+
+.nav-login{
+    float: right;
+    height: 30px;
+    padding: 7px 18px;
+    color: white;
+    background-color: #304F8C;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.nav-signup{
+    display: none;
+    float: right;
+    font-weight: bold;
+}
+
+.navlinks{
+    display: none;
+    float: left;
+    margin-left: 17px;
+    margin-top: 9px;
+}
+
+.navlinks .link{
+    float: left;
+    padding-right: 10px;
+}
+
+.navlinks .link a{
+    color: #4C5D73;
+}
+
+.navlinks-smallscreen{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    z-index: 10;
+    opacity: 0;
+    position: fixed;
+    width: 100%;
+    background-color: #304F8C;
+    top: -100%;
+    transition-duration: 0.5s;
+}
+
+.nav-active{
+    opacity: 1;
+    top: 55px;
+}
+
+.navlinks-smallscreen .link{
+    width: 100%;
+    text-align: center;
+    padding: 20px 10px;
+}
+
+.navlinks-smallscreen .link a{
+    color: white;
+}
+
+
+
+
+/* Css for mobile devices */
+@media screen and (max-width: 480px){
+    .container{
+        width: 100%;
+        min-width: 290px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+/* Css for ipad and tablets */
+@media screen and (min-width: 480px){
+    nav .container{
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+}
+
+/* Css for small screen and laptops */
+@media screen and (min-width: 796px){
+
+    nav .container{
+        margin-top: 23px;
+        margin-bottom: 23px;
+    }
+
+    .logo-container{
+        height: 35px;
+    }
+
+    .hamburger{
+        display: none;
+    }
+
+    .navlinks-smallscreen{
+        display: none;
+    }
+
+    .navlinks{
+        display: block;
+    }
+
+    .navlinks .link:hover a{
+        color: #304F8C;
+    }
+
+    .nav-login{
+        height: 35px;
+        padding: 9px 18px;
+        background-color: white;
+        color:#304F8C;
+        border: 1px solid #304F8C;
+        border-radius: 6px;
+        margin-left: 12px;
+    }
+
+    .nav-login:hover{
+        background-color: #304F8C;
+        color: white;
+    }
+
+    .nav-signup{
+        display: block;
+        height: 35px;
+        padding: 9px 0px;
+        background-color: white;
+        color:#304F8C;
+    }
+}
+
+/* Css for large screen and desktop */
+@media screen and (min-width: 1025px){
+
+    nav .container{
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .logo-container{
+        height: 44px;
+    }
+
+    .nav-login{
+        height: 44px;
+        padding: 13px 35px;
+        margin-left: 24px;
+    }
+
+    .nav-signup{
+        height: 44px;
+        padding: 13px 0px;
+    }
+
+    .navlinks{
+        margin-left: 50px;
+        margin-top: 14px;
+    }
+
+    .navlinks .link{
+        padding-right: 25px;
+        font-size: 16px;
+    }
+
+
+}
+
+@media screen and (min-width: 1203px){
+    .nav-login{
+        padding: 13px 45px;
+    }
+
+    .navlinks{
+        margin-left: 100px;
+    }
+}
