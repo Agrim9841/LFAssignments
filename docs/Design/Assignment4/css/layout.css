@@ -3,12 +3,13 @@ nav{
     background-color: #FFFFFF;
     position: fixed;
     top: 0;
+    z-index: 1;
 }
 
 .container{
     width: 90%;
     margin: auto;
-    overflow: hidden;
+    z-index: 0;
 }
 
 nav .container{
@@ -16,6 +17,7 @@ nav .container{
     z-index: 20;
     margin-top: 12px;
     margin-bottom: 12px;
+    overflow: hidden;
 }
 
 .logo-container{
@@ -87,7 +89,7 @@ nav .container{
     padding: 7px 18px;
     color: white;
     background-color: #304F8C;
-    border-radius: 6px;
+    border-radius: 10px;
     font-weight: bold;
 }
 
@@ -116,7 +118,6 @@ nav .container{
 .navlinks-smallscreen{
     padding-top: 15px;
     padding-bottom: 15px;
-    z-index: 10;
     opacity: 0;
     position: fixed;
     width: 100%;
@@ -140,7 +141,94 @@ nav .container{
     color: white;
 }
 
+.hero .container{
+    margin-top: 270px;
+    position: relative;
+    margin-bottom: 100px;
+}
 
+.hero-texts{
+    text-align: center;
+    margin: 0px 20px;
+    margin-bottom: 85px;
+}
+
+.hero-texts h1{
+    font-size: 30px;
+    line-height: 1.5;
+    color: #111826;
+}
+
+.hero-texts p{
+    margin-top: 15px;
+    line-height: 1.5;
+    margin-bottom: 45px;
+    color: #4C5D73;
+}
+
+.hero-texts a{
+    background-color: #304F8C;
+    padding: 20px 45px;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 10px 15px 20px rgba(48, 79, 140, 0.3);
+}
+
+.hero-image{
+    position: absolute;
+    width: 200px;
+    z-index: -1;
+    top: -170px;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+.hero-image img{
+    height: 100%;
+    width: 100%;
+    max-width: 445px;
+}
+
+.hero-card-collection-container{
+    width: 100%;
+}
+
+.hero-card-container{
+    margin-bottom: 34px;
+}
+
+.hero-card{
+    margin: auto;
+    width: 200px;
+}
+
+.card-image{
+    margin: auto;
+    background-color: rgba(48, 79, 140, 0.1);
+    border-radius: 100%;
+    height: 59px;
+    width: 59px;
+}
+
+.card-image{
+    padding: 20px 20px;
+    margin-bottom: 10px;
+}
+
+.card-body{
+    text-align: center;
+}
+
+.card-title{
+    color: #111826;
+    font-size: 17px;
+    margin-bottom: 6px;
+}
+
+.card-description{
+    font-size: 15px;
+    color: #4C5D73;
+}
 
 
 /* Css for mobile devices */
@@ -159,6 +247,13 @@ nav .container{
         margin-top: 15px;
         margin-bottom: 15px;
     }
+
+    .hero-card-container{
+        display: inline-block;
+        width: 49%;
+    }
+
+
 }
 
 /* Css for small screen and laptops */
@@ -194,8 +289,8 @@ nav .container{
         padding: 9px 18px;
         background-color: white;
         color:#304F8C;
-        border: 1px solid #304F8C;
-        border-radius: 6px;
+        border: 1.8px solid #304F8C;
+        border-radius: 10px;
         margin-left: 12px;
     }
 
@@ -210,6 +305,35 @@ nav .container{
         padding: 9px 0px;
         background-color: white;
         color:#304F8C;
+    }
+
+    .hero .container{
+        margin-top: 200px;
+    }
+    .hero-texts{
+        width: 60%;
+        margin-left: 0px;
+        margin-right: 0px;
+        text-align: left;
+    }
+
+    .hero-image{
+        width: 30%;
+        top: 2px;
+        transform: none;
+        right: 0;
+    }
+
+    .hero-card-collection-container{
+        border-radius: 10px;
+        padding: 30px 0px;
+        background-color: white;
+        box-shadow: 10px 15px 20px rgba(48, 79, 140, 0.3);
+    }
+
+    .hero-card-container{
+        width: 24.5%;
+        margin-bottom: 0px;
     }
 }
 
@@ -246,6 +370,47 @@ nav .container{
         font-size: 16px;
     }
 
+    .hero-texts{
+        width: 46%;
+        margin-bottom: 140px;
+    }
+
+    .hero-texts h1{
+        font-size: 40px;
+    }
+
+    .hero-texts a{
+        padding-right: 60px;
+        padding-left: 60px;
+    }
+
+    .hero-image{
+        width: 35%;
+        top: -7%;
+        transform: none;
+        right: 0;
+    }
+
+    .hero-card-collection-container{
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .hero-card{
+        width: 200px;
+    }
+
+    .card-image{
+        float: left;
+        margin: 0px;
+    }
+
+    .card-body{
+        float: right;
+        text-align: left;
+        width: 120px;
+        padding-top: 10px;
+    }
 
 }
 
