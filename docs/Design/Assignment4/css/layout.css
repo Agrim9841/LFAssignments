@@ -12,6 +12,8 @@ nav{
     z-index: 0;
 }
 
+
+/* Css for navigation bar */
 nav .container{
     position: relative;
     z-index: 20;
@@ -91,6 +93,7 @@ nav .container{
     background-color: #304F8C;
     border-radius: 10px;
     font-weight: bold;
+    transition-duration: 0.1s;
 }
 
 .nav-signup{
@@ -141,6 +144,8 @@ nav .container{
     color: white;
 }
 
+
+/* Css for hero section */
 .hero .container{
     margin-top: 270px;
     position: relative;
@@ -150,7 +155,7 @@ nav .container{
 .hero-texts{
     text-align: center;
     margin: 0px 20px;
-    margin-bottom: 85px;
+    margin-bottom: 70px;
 }
 
 .hero-texts h1{
@@ -162,7 +167,7 @@ nav .container{
 .hero-texts p{
     margin-top: 15px;
     line-height: 1.5;
-    margin-bottom: 45px;
+    margin-bottom: 37px;
     color: #4C5D73;
 }
 
@@ -172,6 +177,12 @@ nav .container{
     color: white;
     border-radius: 10px;
     box-shadow: 10px 15px 20px rgba(48, 79, 140, 0.3);
+    transition-duration: 0.1s;
+    display: inline-block;
+}
+
+.hero-texts a:hover{
+    transform: scale(1.05);
 }
 
 .hero-image{
@@ -202,7 +213,7 @@ nav .container{
     width: 200px;
 }
 
-.card-image{
+.hero-card .card-image{
     margin: auto;
     background-color: rgba(48, 79, 140, 0.1);
     border-radius: 100%;
@@ -210,24 +221,485 @@ nav .container{
     width: 59px;
 }
 
-.card-image{
+.hero-card .card-image{
     padding: 20px 20px;
     margin-bottom: 10px;
 }
 
-.card-body{
+.hero-card .card-body{
     text-align: center;
 }
 
-.card-title{
+.hero-card .card-title{
     color: #111826;
     font-size: 17px;
     margin-bottom: 6px;
 }
 
-.card-description{
+.hero-card .card-description{
     font-size: 15px;
     color: #4C5D73;
+}
+
+.services .container, .aboutus .container, .performance .container, .plans .container{
+    margin-bottom: 100px;
+}
+
+
+/* General section heading css */
+.container h2{
+    font-size: 21px;
+    margin-bottom: 50px;
+}
+
+.container .section-name{
+    color: #4C5D73;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+
+
+
+/* Css for services Section */
+.services-card-collection-container{
+    width: 100%;
+}
+
+.services-card-collection-container::after{
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.services-card-container{
+    width: 100%;
+    float: left;
+    margin-bottom: 40px;
+}
+
+.services-card-container:last-child{
+    margin-bottom: 40px;
+}
+
+.services-card{
+    width: 90%;
+    margin: auto;
+    max-width: 280px;
+    padding: 20px 24px;
+    transition-duration: 0.1s;
+    box-shadow: 10px 20px 20px rgba(48, 79, 140, 0.05);
+}
+
+.services-card:hover{
+    transform: scale(1.05);
+}
+
+.services-card .card-image{
+    height: 67px;
+    width: 67px;
+    background-color: #EAEDF3;
+    border-radius: 100%;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.services-card .card-image img{
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+}
+
+.services-card .card-title{
+    color: #111826;
+    margin-bottom: 25px;
+}
+
+.services-card .card-description{
+    font-size: 14px;
+    color: #4C5D73;
+    line-height: 1.5;
+}
+
+
+
+/* Css for about us Section */
+.aboutus-card{
+    width: 100%
+}
+
+.aboutus-card::after{
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.aboutus-image{
+    width: 90%;
+    margin: auto;
+    height: 400px;
+    margin-bottom: 30px;
+}
+
+.aboutus-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.aboutus-text p{
+    color: #4C5D73;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.aboutus-body a{
+    display: inline-block;
+    padding: 20px 30px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #304F8C;
+    font-weight: bold;
+    color:#304F8C;
+    box-shadow: 10px 20px 20px rgba(48, 79, 140, 0.05);
+    transition-duration: 0.1s;
+}
+
+.aboutus-body a:hover{
+    transform: scale(1.05);
+}
+
+
+
+
+/* Css for performance Section */
+.performance-card-collection-container{
+    width: 100%;
+}
+
+.performance-card-collection-container::after{
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.performance-card-container{
+    float: left;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.performance-card-container:last-child{
+    margin-bottom: 0px;
+}
+
+.performance-card{
+    width: 80%;
+    max-width: 270px;
+    margin: auto;
+    box-shadow: 10px 20px 20px rgba(48, 79, 140, 0.05);
+    padding: 30px;
+    text-align: center;
+    border-radius: 10px;
+    transition-duration: 0.1s;
+}
+
+.performance-card:hover{
+    transform: scale(1.05);
+}
+
+.performance-card .card-image{
+    height: 105px;
+    width: 105px;
+    background-color: #EAEDF3;
+    border-radius: 100%;
+    margin: auto;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.performance-card .card-image img{
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate( 50%, -50%);
+}
+
+
+
+
+
+/* Css for plans Section */
+.plans-card-collection-container{
+    width: 100%;
+}
+
+.plans-card-container{
+    width: 100%;
+    margin-bottom: 35px;
+}
+
+.plans-card-container:last-child{
+    margin-bottom: 0px;
+}
+
+.plans-card{
+    width: 250px;
+    margin: auto;
+    box-shadow: 2px 20px 20px rgba(48, 79, 140, 0.05);
+    padding: 30px 25px;
+    border-radius: 10px;
+    transition-duration: 0.1s;
+    position: relative;
+    cursor: pointer;
+}
+
+.plans-card:hover{
+    background-color: #304F8C;
+    transform: scale(1.05);
+
+}
+
+.plans-active-card{
+    background-color: #304F8C;
+}
+
+.plans-card .card-status{
+    position: absolute;
+    top:-17px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    padding: 10px 0px;
+    text-align: center;
+    width: 110px;
+    background-color: #94F2E9;
+    color: #304F8C;
+    border-radius: 20px;
+}
+
+.plans-card .card-name{
+    font-size: 17px;
+    color: #111826;
+    margin-bottom: 25px;
+}
+
+.plans-card .card-price{
+    font-size: 32px;
+    color: #111826;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.plans-card .card-price sup{
+    font-size: 12px;
+    color: rgba(48, 79, 140, 0.6);
+    font-weight: normal;
+}
+
+.plans-card .card-description{
+    color: #4C5D73;
+    font-size: 14px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.plans-card:hover .card-description, .plans-card:hover .card-price
+, .plans-card:hover .card-name, .plans-card:hover .card-price sup,
+.plans-active-card .card-description, .plans-active-card .card-price,
+.plans-active-card .card-name, .plans-active-card .card-price sup{
+    color: #FFFFFF;
+}
+
+.plans-card .card-button{
+    padding-top: 18px;
+    padding-bottom: 18px;
+    width: 100%;
+    background-color: white;
+    font-weight: bolder;
+    border: 1px solid #304F8C;
+    border-radius: 10px;
+    color: #304F8C;
+}
+
+.plans-card:hover .card-button,
+.plans-active-card .card-button{
+    background-color: #EAEDF3;
+}
+
+
+
+
+
+/* Css for comment Section */
+.comment{
+    background-color: #EAEDF3;
+    padding-bottom: 20px;
+}
+
+.comment .container{
+    padding-bottom: 40px;
+    padding-top: 20px;
+    padding-left: 10%;
+    padding-right: 10%;
+    text-align: center;
+    position: relative;
+}
+
+.comment img{
+    margin-bottom: 15px;
+}
+
+.comment p{
+    margin-bottom: 40px;
+    color: #4C5D73;
+    line-height: 1.5;
+}
+
+.comment .frame{
+    position: absolute;
+    height: 68px;
+    width: 68px;
+    top: -10px;
+    right: 25px;
+}
+
+.comment .page-indicator{
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    border-radius: 100%;
+    border: 1px solid #304F8C;
+    position: relative;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.comment .page-indicator-hover{
+    position: absolute;
+    height: 8px;
+    width: 8px;
+    background-color: #304F8C;
+    border-radius: 10px;
+    top: 2.5px;
+    left: 2.5px;
+    opacity: 0;
+}
+
+.page-indicator:hover .page-indicator-hover{
+    opacity: 1;
+}
+
+.comment .active{
+    background-color: #304F8C;
+}
+
+
+/* css for footer section */
+footer{
+    background-color: #111826;
+}
+
+footer .container{
+    border-bottom: 1px solid white;
+    padding-top: 60px;
+    overflow: hidden;
+}
+
+footer h5{
+    font-size: 18px;
+    color: white;
+    margin-bottom: 35px;
+}
+
+footer a{
+    color: white
+}
+
+.footer-link-container{
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.footer-link-container:nth-child(even){
+    float: right;
+    clear: right;
+}
+
+.footer-link-container:nth-child(odd){
+    float: left;
+    clear:left;
+}
+
+.footerlinks{
+    padding-right: 10px;
+}
+
+.footerlinks .link{
+    margin-bottom: 20px;
+}
+
+.footer-searchbar-container{
+    float: left;
+    clear: both;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.footer-searchbar{
+    background-color: white;
+    color: grey;
+    border-radius: 10px;
+    width: 90%;
+    margin: auto;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow: hidden;
+    text-align: left;
+}
+
+.footer-searchbar button, .footer-searchbar input{
+    font-size: 18px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 0px;
+    outline: none;
+    background-color: transparent;
+}
+
+.footer-searchbar input{
+    width: 90%;
+}
+
+.footer-searchbar button{
+    float: right;
+}
+
+.footer-icon{
+    margin-right: 20px;
+}
+
+.footer-icon:hover{
+    fill: white;
+    cursor: pointer;
+}
+
+.footer-icon:hover .svg-inner{
+    fill: white;
+    stroke: #111826;
+    stroke-width: 2;
+}
+
+.copyright{
+    text-align: center;
+    padding: 20px 0px;
+    color: white;
+    font-size: 14px;
 }
 
 
@@ -253,7 +725,18 @@ nav .container{
         width: 49%;
     }
 
+    .performance-card-container{
+        width: 50%;
+    }
 
+    .performance-card{
+        width: 80%;
+    }
+
+    .footer-link-container{
+        width: 49%;
+        text-align: left;
+    }
 }
 
 /* Css for small screen and laptops */
@@ -310,6 +793,7 @@ nav .container{
     .hero .container{
         margin-top: 200px;
     }
+
     .hero-texts{
         width: 60%;
         margin-left: 0px;
@@ -328,12 +812,92 @@ nav .container{
         border-radius: 10px;
         padding: 30px 0px;
         background-color: white;
-        box-shadow: 10px 15px 20px rgba(48, 79, 140, 0.3);
+        box-shadow: 10px 15px 20px rgba(48, 79, 140, 0.1);
     }
 
     .hero-card-container{
         width: 24.5%;
         margin-bottom: 0px;
+    }
+
+
+    .services-card-container{
+        width: 50%;
+        margin-bottom: 40px;
+    }
+
+
+    .aboutus-image{
+        width: 40%;
+        height: 500px;
+        float: left;
+        margin: 0px;
+    }
+
+    .aboutus-body{
+        float: right;
+        width: 60%;
+        padding-left: 60px;
+        padding-top: 100px;
+    }
+
+    .performance-card-container{
+        width: 25%;
+        margin-bottom: 0px;
+    }
+
+    .performance-card{
+        width: 90%;
+    }
+
+    .plans-card-collection-container::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    .plans-card-container{
+        float: left;
+        width: 50%;
+    }
+
+    .plans-card{
+        width: 90%;
+        max-width: 280px;
+    }
+
+    .plans-card .card-description{
+        height: 60px;
+    }
+
+    .comment{
+        background-color: #FFFFFF;
+        margin-bottom: 100px;
+        padding-bottom: 0px;
+    }
+
+    .comment .container{
+        width: 700px;
+        background-color: #EAEDF3;
+        border-radius: 10px;
+    }
+
+    .footer-link-container{
+        width: 24.5%;
+    }
+
+    .footer-link-container:nth-child(even), .footer-link-container:nth-child(odd){
+        float: left;
+        clear: none;
+    }
+
+    .footer-searchbar-container{
+        width: 400px;
+        text-align: left;
+    }
+
+    .footer-searchbar{
+        width: 100%;
     }
 }
 
@@ -400,18 +964,48 @@ nav .container{
         width: 200px;
     }
 
-    .card-image{
+    .hero-card .card-image{
         float: left;
         margin: 0px;
     }
 
-    .card-body{
+    .hero-card .card-body{
         float: right;
         text-align: left;
         width: 120px;
         padding-top: 10px;
     }
 
+    .container h2{
+        font-size: 32px;
+        width: 75%;
+    }
+
+    .container .section-name{
+        color: #4C5D73;
+        font-size: 18px;
+        margin-bottom: 13px;
+    }
+
+    .services-card-container{
+        width: 25%;
+        margin-bottom: 0px;
+    }
+
+    .aboutus-body{
+        padding-top: 120px;
+    }
+
+    .aboutus-body a{
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+
+    .plans-card-container{
+        float: left;
+        width: 25%;
+        margin-bottom: 0px;
+    }
 }
 
 @media screen and (min-width: 1203px){
@@ -421,5 +1015,15 @@ nav .container{
 
     .navlinks{
         margin-left: 100px;
+    }
+
+    .footer-link-container{
+        width: 18%;
+    }
+
+    .footer-searchbar-container{
+        width: 25%;
+        float: right;
+        clear: none;
     }
 }
