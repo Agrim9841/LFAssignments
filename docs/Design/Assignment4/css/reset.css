@@ -6,6 +6,10 @@
     font-family: 'Rubik', sans-serif;
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 ul, li{
     list-style: none;
 }
