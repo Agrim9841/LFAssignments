@@ -1,0 +1,14 @@
+
+
+.aboutus-body a:hover{
+    background-color: #304F8C;
+    color: white;
+}
+
+.aboutus-body svg{
+    padding-top: 1px;
+    padding-left: 5px;
+    stroke: #304F8C;
+    fill: #304F8C;
+    stroke-width: 1px;
+}

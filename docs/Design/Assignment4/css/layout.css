@@ -10,6 +10,7 @@ nav{
     width: 90%;
     margin: auto;
     z-index: 0;
+    max-width: 1500px;
 }
 
 
@@ -211,6 +212,7 @@ nav .container{
 .hero-card{
     margin: auto;
     width: 200px;
+    cursor: pointer;
 }
 
 .hero-card .card-image{
@@ -287,8 +289,10 @@ nav .container{
     margin: auto;
     max-width: 280px;
     padding: 20px 24px;
+    border-radius: 10px;
     transition-duration: 0.1s;
     box-shadow: 10px 20px 20px rgba(48, 79, 140, 0.05);
+    cursor: pointer;
 }
 
 .services-card:hover{
@@ -403,6 +407,7 @@ nav .container{
     text-align: center;
     border-radius: 10px;
     transition-duration: 0.1s;
+    cursor: pointer;
 }
 
 .performance-card:hover{
@@ -880,6 +885,8 @@ footer a{
         width: 700px;
         background-color: #EAEDF3;
         border-radius: 10px;
+        padding-left: 150px;
+        padding-right: 150px;
     }
 
     .footer-link-container{
@@ -992,6 +999,10 @@ footer a{
         margin-bottom: 0px;
     }
 
+    .services-card .card-description{
+        height: 60px;
+    }
+
     .aboutus-body{
         padding-top: 120px;
     }
@@ -1015,6 +1026,10 @@ footer a{
 
     .navlinks{
         margin-left: 100px;
+    }
+
+    .hero .container, .services .container, .aboutus .container, .performance .container, .plans .container{
+        margin-bottom: 160px;
     }
 
     .footer-link-container{
