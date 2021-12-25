@@ -1,22 +1,26 @@
-// Should have functional controls like forward and back arrows and indicator dots.
-// Should have sliding animation when transitioning from one image to another.
-// When reaching a boundary, the slider should either change direction or animate towards 
-// the other boundary and continue in the same direction.
-// Indicator dots should be clickable and transition to the image indicated when clicked.
+// Transition and hold times should be configurable
+// Should automatically slide from one image to another with a fixed interval.
+// The page should allow multiple instances of the slider.
+// Should be responsive.
+// OOP using ES5 // optional // not really necessary // ES6 classes are allowed
+
 
 const TOTAL_DISTANCE = 100;     // total diistance to be covered in percentage
-const FRAME_REFRESH_RATE = 5;  // frame refresh rate in milli second
-const TIME = 100;              // total time taken to reach destination in millisecond
-const DISTANCE_COVERED_PER_REFRESH = TOTAL_DISTANCE/(TIME/FRAME_REFRESH_RATE);
+const FRAME_REFRESH_RATE = 10;  // frame refresh rate in milli second
 
 var carauselList = document.querySelectorAll(".carousel-container");
 
-function Carausel(carauselElement){
+function Carausel(carauselElement, holdTime = 5000, transitionTime = 100){
     this.element = carauselElement;
-    this.element.style.height = this.element.getAttribute("height") + "px";
     this.imageList = this.element.querySelectorAll(".carausel-image");
     this.currentImage = 0;
     this.animating = false;
+    this.distanceCoveredPerRefresh = ((TOTAL_DISTANCE* FRAME_REFRESH_RATE)/(transitionTime));
+
+    let height = this.element.getAttribute("height");
+    if(height){
+        this.element.style.height = this.element.getAttribute("height") + "px";
+    }
 
     let indicatorList = document.createElement("div");
     indicatorList.setAttribute("class", "carausel-indicator-list");
@@ -61,7 +65,7 @@ function Carausel(carauselElement){
                     this.animating = false;
                     clearInterval(slide);
                 }else{
-                    left-=DISTANCE_COVERED_PER_REFRESH;
+                    left-=this.distanceCoveredPerRefresh;
                     this.imageList[this.currentImage].style.left = `${left}%`;
                     this.imageList[nextImage].style.left = `${left+100}%`;
                 }
@@ -89,7 +93,7 @@ function Carausel(carauselElement){
                     this.animating = false;
                     clearInterval(slide);
                 }else{
-                    left+=DISTANCE_COVERED_PER_REFRESH;
+                    left+=this.distanceCoveredPerRefresh;
                     this.imageList[this.currentImage].style.left = `${left}%`;
                     this.imageList[nextImage].style.left = `${left-100}%`;
                 }
@@ -115,12 +119,19 @@ function Carausel(carauselElement){
     this.element.appendChild(leftCtrlBtn);
     this.element.appendChild(rightCtrlBtn);
 
-    
-
-    // setInterval(() => {
-    //     // console.log("hello");
-    // }, 5000);
+    setInterval(() => {
+        this.slideRight();
+    }, holdTime);
 }
 
-let car = new Carausel(carauselList[0]);
-let car2 = new Carausel(carauselList[1]);
+carauselList.forEach(car => {
+    let holdTime = car.getAttribute("data-hold-time");
+    let transitionTime = car.getAttribute("data-transition-time");
+    if(!holdTime){
+        holdTime = 5000;
+    }
+    if(!transitionTime){
+        transitionTime = 100;
+    }
+    new Carausel(car, holdTime, transitionTime);
+});

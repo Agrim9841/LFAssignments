@@ -13,6 +13,7 @@ var carauselList = document.querySelectorAll(".carousel-container");
 
 function Carausel(carauselElement){
     this.element = carauselElement;
+    
     this.element.style.height = this.element.getAttribute("height") + "px";
     this.imageList = this.element.querySelectorAll(".carausel-image");
     this.currentImage = 0;
@@ -117,4 +118,3 @@ function Carausel(carauselElement){
 }
 
 let car = new Carausel(carauselList[0]);
-let car2 = new Carausel(carauselList[1]);
