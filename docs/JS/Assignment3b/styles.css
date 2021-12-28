@@ -6,3 +6,48 @@
     border: 1px solid grey;
 }
 
+.status{
+    z-index: 10;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: teal;
+}
+
+.status h1{
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: snow;
+}
+
+.status button{
+    font-size: 1.2rem;
+    padding: 5px 20px;
+    background-color: springgreen;
+    outline: none;
+    border: 0px;
+    color: white;
+    border-radius: 10px;
+}
+
+.status h3{
+    display: none;
+    color: orangered;
+    font-size: 2rem;
+    margin-top: 20px;
+    animation-name: blink;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes blink {
+  0% {opacity: 100%;}
+  30% {opacity: 100%;}
+  50% {opacity: 0%;}
+  70% {opacity: 0%;}
+  100% {opacity: 100%;}
+}
