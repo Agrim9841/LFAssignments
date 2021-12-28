@@ -26,8 +26,8 @@ for(let i = 0; i < ballCount; i++){
     let radius = Math.floor((Math.random()*5)+5);
     let angle = (Math.random() * 90 * Math.PI) / 180;
     let speed = (Math.random())+0.5;
-    let xdirection = Math.round(Math.random());
-    let ydirection = Math.round(Math.random());
+    let xdirection = Math.random() > 0.5? -1 : 1;
+    let ydirection = Math.random() > 0.5? -1 : 1;
     let x;
     let y;
 

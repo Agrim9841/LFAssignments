@@ -2,7 +2,7 @@ const CANVAS_HEIGHT = window.innerHeight - 50;
 const CANVAS_WIDTH = window.innerWidth - 50;
 
 let canvas = document.getElementById("canvas1");
-let ballCount = 50;
+let ballCount = 20;
 let ballList = [];
 let literalList = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c'
             , 'd', 'e', 'f'];
@@ -15,7 +15,6 @@ canvas.width = CANVAS_WIDTH;
 canvas.addEventListener("mousedown", function(event){
     let yClick = event.y - canvas.offsetTop;
     let xClick = event.x - canvas.offsetLeft;
-    console.log(xClick, yClick);
     let ballClicked;
     ballList.forEach(ball => {
         if(xClick > ball.x && xClick < ball.x + ball.r * 2
@@ -42,36 +41,40 @@ function randomColor(){
 }
 
 // generating balls
-for(let i = 0; i < ballCount; i++){
-    let creatingBall = true;
-    let radius = Math.floor((Math.random()*5)+10);
-    let angle = (Math.random() * 90 * Math.PI) / 180;
-    let speed = (Math.random())+0.5;
-    let xdirection = Math.round(Math.random());
-    let ydirection = Math.round(Math.random());
-    let x;
-    let y;
+function generateBalls(){
+    for(let i = 0; i < ballCount; i++){
+        let creatingBall = true;
+        let radius = Math.floor((Math.random()*5)+10);
+        let angle = (Math.random() * 90 * Math.PI) / 180;
+        let speed = (Math.random())+0.5;
+        let xdirection = Math.random() > 0.5? -1 : 1;
+        let ydirection = Math.random() > 0.5? -1 : 1;
+        let x;
+        let y;
 
-    while(creatingBall){
-        let i = 0;
-        x = Math.floor((Math.random() * (CANVAS_WIDTH - (2 * radius))) );
-        y = Math.floor((Math.random() * (CANVAS_HEIGHT - (2 * radius))) );
-    
-        for (let ball of ballList){
-            let distance = Math.sqrt((((ball.x + ball.r)-(x + radius))**2) + (((ball.y + ball.r)-(y + radius))**2))
-            if(distance <= (radius+ ball.r)){
-                break;
+        while(creatingBall){
+            let i = 0;
+            x = Math.floor((Math.random() * (CANVAS_WIDTH - (2 * radius))) );
+            y = Math.floor((Math.random() * (CANVAS_HEIGHT - (2 * radius))) );
+        
+            for (let ball of ballList){
+                let distance = Math.sqrt((((ball.x + ball.r)-(x + radius))**2) + (((ball.y + ball.r)-(y + radius))**2))
+                if(distance <= (radius+ ball.r)){
+                    break;
+                }
+                ++i;
             }
-            ++i;
+            if(i == ballList.length){
+                creatingBall = false;
+            }
         }
-        if(i == ballList.length){
-            creatingBall = false;
-        }
+
+        let ball = new Ball(x, y, radius, randomColor(), angle, speed, xdirection, ydirection);
+        ballList.push(ball);
     }
 
-    let ball = new Ball(x, y, radius, randomColor(), angle, speed, xdirection, ydirection);
-    ballList.push(ball);
 }
+
 
 // function to check for collision with wall
 function checkWallCollision(ball){
@@ -171,15 +174,26 @@ function handleCollision(ball1, ball2, distance){
 }
 
 let ctx = canvas.getContext("2d");
-
+let statusScreen = document.querySelector(".status");
 let base_image = new Image();
 base_image.src = './ant.png';
 base_image.onload = function(){
-    animate();
+    statusScreen.querySelector(".start-btn").addEventListener("click", ()=>{
+        generateBalls();
+        statusScreen.style.display = "none";
+        animate();
+    });
 }
 
+
 function animate(){
-    requestAnimationFrame(animate);
+    if(ballList.length === 0 ){
+        statusScreen.style.display = "flex";
+        statusScreen.querySelector("h3").style.display = "block";
+    }else{
+        requestAnimationFrame(animate);
+    }
+
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     ballList.forEach(ball => {
 
