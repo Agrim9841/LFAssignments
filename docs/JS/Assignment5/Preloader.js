@@ -43,6 +43,13 @@ setTimeout(() => {
     let checkPreloader = setInterval(() => {
         if(loadedImage === 6){
             clearInterval(checkPreloader);
+            let highscore = localStorage.getItem("highscore");
+            if(!highscore){
+                localStorage.setItem("highscore", "0");
+                document.querySelector(".board-high-score").innerText = "0";
+            }else{
+                document.querySelector(".board-high-score").innerText = highscore;
+            }
             setup();
             let count = 100;
             let removePreloader = setInterval(() => {

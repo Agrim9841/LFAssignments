@@ -9,6 +9,7 @@ let platformList = [];
 document.querySelector(".start-btn").addEventListener("click", function(){
     playing = true;
     document.querySelector(".menu").style.display = "none";
+    document.querySelector(".board-score").innerText = "0";
     animate();
 });
 
@@ -16,7 +17,15 @@ window.addEventListener("mousedown", ()=>{
     if(playing === true){
         player.speed = -8;
     }
-})
+});
+
+window.addEventListener("keydown", (event)=>{
+    if(event.code === "Space"){
+        if(playing === true){
+            player.speed = -8;
+        }
+    }
+});
 
 function resetBackground(background){
     let rightmostPos = 0;
@@ -50,6 +59,19 @@ function generatePipe(){
     pipeList.push(pipeObj);
 }
 
+function updateScore(){
+    document.querySelector(".board-score").innerText = player.score;
+    document.querySelector(".score").innerText = player.score;
+}
+
+function updateHighScore(){
+    let highScore = parseInt(localStorage.getItem("highscore"));
+    if(highScore < player.score){
+        localStorage.setItem("highscore", player.score);
+        document.querySelector(".board-high-score").innerText = player.score;
+    }
+}
+
 function updatePipeList(){
     pipeList = pipeList.filter(pipe =>{
         if(pipe.topPipe.xPosition + pipe.topPipe.width > 0){
@@ -58,11 +80,43 @@ function updatePipeList(){
     })
 }
 
+function scoreCheck(pipe){
+    if(!pipe.scored && ((pipe.topPipe.xPosition+ pipe.topPipe.width)<(player.xPosition-player.length/2))){
+        player.score++;
+        pipe.scored = true;
+        updateScore();
+    }
+}
+
 function terminate(){
     playing = false;
+    updateHighScore();
     setup();
     document.querySelector(".menu").style.display = "flex";
     document.querySelector(".game-over").style.display = "block";
+}
+
+function findDistance(x1, y1, x2, y2){
+    let xDiff = x2 - x1;
+    let yDiff = y2 - y1;
+    let distance = Math.sqrt(xDiff**2 + yDiff**2);
+    return distance;
+}
+function PlayerPipeCollisionCheck(pipe){
+    if (player.xPosition - player.length/2 < pipe.xPosition + pipe.width &&
+        player.xPosition + player.length/2 > pipe.xPosition &&
+        player.yPosition - player.length/2< pipe.yPosition + pipe.height &&
+        player.length/2 + player.yPosition > pipe.yPosition) {
+            terminate();
+            // let distance = findDistance(player.xPosition, player.yPosition, pipe.xPosition, pipe.yPosition);
+            // if(distance < player.length/2){
+            //     terminate();
+            // }
+            // distance = findDistance(player.xPosition, player.yPosition, pipe.xPosition + pipe.height, pipe.yPosition);
+            // if(distance < player.length/2){
+            //     terminate();
+            // }
+    }
 }
 
 function PlayerWallCollisionCheck(){
@@ -77,6 +131,8 @@ function setup(){
     pipeList = [];
     platformList = [];
     pipeGenerationCount = 0;
+
+    document.querySelector(".score").innerText = "0";
 
     let backgroundCovered = 0;
     while(backgroundCovered < 2*canvas.width){
@@ -119,7 +175,12 @@ function animate(){
 
         pipeList.forEach((imgObj)=>{
             imgObj.update();
+            if(!imgObj.scored){
+                PlayerPipeCollisionCheck(imgObj.topPipe);
+                PlayerPipeCollisionCheck(imgObj.bottomPipe);
+            }
             imgObj.draw();
+            scoreCheck(imgObj);
         });
 
         updatePipeList();
