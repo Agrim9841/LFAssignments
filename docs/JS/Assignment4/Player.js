@@ -67,3 +67,15 @@ function BackgroundImage(screenWidth, laneImage){
         this.yPosition += (4 * speed);
     }
 }
+
+function Bullet(xPosition, yPosition, width, height){
+    this.xPosition = xPosition;
+    this.yPosition = yPosition;
+    this.width = width;
+    this.height = height;
+    this.image = bulletImage;
+
+    this.update = function(){
+        this.yPosition -= 5;
+    }
+}
