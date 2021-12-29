@@ -2,8 +2,10 @@ let canvas = document.getElementById("canvas1");
 const ACCELERATION_DUE_TO_GRAVITY = 9.8;
 const PI = Math.PI;
 
-canvas.height = window.innerHeight -50;
-canvas.width = window.innerWidth - 50;
+canvas.height = window.innerHeight -25;
+canvas.width = window.innerWidth;
+// canvas.height = (window.innerHeight -25)>599? (window.innerHeight -25): 600;
+// canvas.width = (window.innerWidth -25)>459? (window.innerWidth -25): 460;
 canvas.style.backgroundColor = "red";
 ctx = canvas.getContext("2d");
 
@@ -19,6 +21,7 @@ function Player(xPosition, yPosition, length){
     this.length = length;
     this.speed = -8;
     this.rotation = 0;
+    this.score = 0;
 
     this.draw = function(){
         ctx.save();
@@ -85,6 +88,7 @@ function PlatformImage(xPosition, yPosition, height){
 }
 
 function PipeObject(xPosition, yPosition, width, height){
+    this.scored = false;
     this.topPipe = {
         xPosition: xPosition,
         yPosition: yPosition - height - 70,
@@ -92,7 +96,6 @@ function PipeObject(xPosition, yPosition, width, height){
         height: height,
         image: pipeTopImage,
     }
-
     this.bottomPipe = {
         xPosition: xPosition,
         yPosition: yPosition + 70,
