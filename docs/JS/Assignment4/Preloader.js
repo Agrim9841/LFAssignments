@@ -11,6 +11,7 @@ let carImage6 = new Image();
 let roadImage = new Image();
 let truckImage = new Image();
 let playerImage = new Image();
+let bulletImage = new Image();
 let explosionImage = new Image();
 let carImageList = [];
 
@@ -62,6 +63,11 @@ playerImage.onload = function(){
 
 explosionImage.src = './assets/explosion.png';
 explosionImage.onload = function(){
+    loadedImage += 1;
+}
+
+bulletImage.src = './assets/Bullet.png';
+bulletImage.onload = function(){
     loadedImage += 1;
 }
 

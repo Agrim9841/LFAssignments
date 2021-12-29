@@ -33,9 +33,17 @@
     position: relative;
 }
 
-.score-board, .highscore-board{
+.instruction{
     position: absolute;
-    right: -150px;
+    left: -155px;
+    width: 150px;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+}
+.score-board, .highscore-board, .bullet-count-board{
+    position: absolute;
+    right: -155px;
     width: 150px;
     top: 0px;
     background-color: green;
@@ -46,14 +54,19 @@
 }
 
 .highscore-board{
-    left: -150px;
+    left: -155px;
 }
 
-.score-board h2, .highscore-board h2{
+.bullet-count-board{
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.score-board h2, .highscore-board h2, .bullet-count-board h2{
     margin-bottom: 10px;
 }
 
-.score, .highscore{
+.score, .highscore, .bullet-count{
     text-align: center;
     border: 5px solid grey;
     border-radius: 10px;
@@ -65,7 +78,7 @@
 .reset-score-btn, .start-btn{
     position: absolute;
     bottom: 0px;
-    right: -150px;
+    right: -155px;
     width: 150px;
     border-radius: 10px;
     border: 0px;
@@ -78,7 +91,7 @@
 }
 
 .reset-score-btn{
-    left: -150px;
+    left: -155px;
     background-color: red;
     color: white;
 }

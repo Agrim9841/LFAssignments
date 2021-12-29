@@ -9,6 +9,9 @@ let carList = [];
 let speed = 1;
 let laneImgList = [];
 let carGenerationInterval = 0;
+let bulletList = [];
+let bulletCount = 0;
+let bulletAddCounter = 0;
 let collided = { 
     state: false,
     object: null,
@@ -25,6 +28,8 @@ window.addEventListener('keydown', function(event){
         player1.moveLeft();
     }else if(event.code === "KeyD" || event.code === "ArrowRight"){
         player1.moveRight();
+    }else if(event.code === "KeyJ"){
+        generateBullet();
     }
 });
 
@@ -55,13 +60,58 @@ function generateCar(){
     }
 }
 
+function generateBullet(){
+    if(bulletCount>0){
+        let bulletItem = new Bullet(player1.xPosition, player1.yPosition, canvas.width/15, canvas.width/15+5);
+        bulletList.push(bulletItem);
+        bulletCount --;
+        document.querySelector(".bullet-count").innerText = bulletCount;
+    }
+}
+
+function checkBulletCount(){
+    if(bulletAddCounter >= 10 && bulletCount<10){
+        bulletCount++;
+        document.querySelector(".bullet-count").innerText = bulletCount;
+        bulletAddCounter = 0;
+    }
+}
+
 function checkCollision(car, player){
     if (car.xPosition < player.xPosition + player.width &&
-        car.xPosition + car.width > player.xPosition &&
-        car.yPosition < player.yPosition + player.height &&
-        car.height + car.yPosition > player.yPosition) {
+    car.xPosition + car.width > player.xPosition &&
+    car.yPosition < player.yPosition + player.height &&
+    car.height + car.yPosition > player.yPosition) {
         collided.state = true;
         collided.object = car;
+    }
+}
+
+function checkBulletCollision(car, bullet){
+    if (car.xPosition < bullet.xPosition + bullet.width &&
+    car.xPosition + car.width > bullet.xPosition &&
+    car.yPosition < bullet.yPosition + bullet.height &&
+    car.height + car.yPosition > bullet.yPosition) {
+        carList = carList.filter((carItem)=> {
+            if(carItem != car){
+                return carItem;
+            }
+        });
+        bulletList = bulletList.filter((bulletItem)=>{
+            if(bulletItem != bullet){
+                return bulletItem;
+            }
+        })
+    }
+}
+
+function bulletOutOfScreen(bullet){
+    if((bullet.y + bullet.height/2) < 0){
+        bulletList.filter(bulletItem =>{
+            if(bulletItem != bullet){
+                return bulletItem;
+            }
+        })
     }
 }
 
@@ -109,12 +159,15 @@ function drawLane(){
 function setUp(){
     player1.reset();
     document.querySelector(".score").innerText = "0";
+        document.querySelector(".bullet-count").innerText = "0";
     carGenerationInterval = 0;
     collided = { 
         state: false,
         object: null,
     }
     carList = [];
+    bulletList = [];
+    bulletCount = 0;
     speed = 1;
     let laneDrawingPosition = canvas.height;
     for(let laneCount = 0; laneCount < laneImgList.length; laneCount++){
@@ -140,6 +193,7 @@ function setUp(){
 document.querySelector('.start-btn').addEventListener("click", ()=>{
     setUp();
     animate();
+    document.querySelector('.start-btn').style.display = "none";
 })
 
 
@@ -151,6 +205,7 @@ function animate(){
     }
     
     drawLane();
+    checkBulletCount();
 
     carList.forEach((car)=> {
         car.update(speed);
@@ -163,9 +218,24 @@ function animate(){
         if( car.yPosition > player1.yPosition && car.scored === false){
             car.scored = true;
             player1.score++;
+            bulletAddCounter++;
             document.querySelector(".score").innerText = player1.score;
         }
         checkCollision(car, player1);
+    });
+
+    bulletList.forEach(bullet => {
+        bullet.update();
+
+        ctx.save();
+        ctx.translate(bullet.xPosition, bullet.yPosition);
+        ctx.drawImage(bullet.image, -bullet.width/2, -bullet.height/2, bullet.width, bullet.height);
+        ctx.restore();
+
+        bulletOutOfScreen(bullet);
+        carList.forEach(car => {
+            checkBulletCollision(car, bullet);
+        });
     });
 
     player1.update(speed);
@@ -192,12 +262,13 @@ function animate(){
         ctx.font = "30px Comic Sans MS";
         ctx.fillText("Press Start to play again", canvas.width/2, canvas.height/2);
         updateHighScore();
+        document.querySelector('.start-btn').style.display = "block";
     }
 }
 
 setTimeout(() => {
     let checkPreloader = setInterval(() => {
-        if(loadedImage === 9){
+        if(loadedImage === 10){
             clearInterval(checkPreloader);
             let count = 100;
             let removePreloader = setInterval(() => {
