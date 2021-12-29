@@ -2,10 +2,8 @@ let canvas = document.getElementById("canvas1");
 const ACCELERATION_DUE_TO_GRAVITY = 9.8;
 const PI = Math.PI;
 
-canvas.height = window.innerHeight -25;
-canvas.width = window.innerWidth;
-// canvas.height = (window.innerHeight -25)>599? (window.innerHeight -25): 600;
-// canvas.width = (window.innerWidth -25)>459? (window.innerWidth -25): 460;
+canvas.height = (window.innerHeight -25)>599? (window.innerHeight -25): 600;
+canvas.width = (window.innerWidth -25)>459? (window.innerWidth -25): 460;
 canvas.style.backgroundColor = "red";
 ctx = canvas.getContext("2d");
 
