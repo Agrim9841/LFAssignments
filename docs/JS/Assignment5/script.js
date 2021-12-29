@@ -2,6 +2,7 @@ let player;
 let playing = false;
 let platformYPos = canvas.height-50;
 let backgroundImageList = [];
+let pipeGenerationCount = 0;
 let pipeList = [];
 let platformList = [];
 
@@ -42,9 +43,19 @@ function resetPlatform(platform){
 }
 
 function generatePipe(){
-    let pipeObj = new PipeObject(canvas.width + 100, canvas.height/2, 75, canvas.height / 1.5);
+    let acceptabeNudgePos = canvas.height/3;
+    let nudge = Math.random()*acceptabeNudgePos - acceptabeNudgePos/2;
+    let pipeObj = new PipeObject(canvas.width + 100, canvas.height/2 + nudge, 75, canvas.height / 1.5);
 
     pipeList.push(pipeObj);
+}
+
+function updatePipeList(){
+    pipeList = pipeList.filter(pipe =>{
+        if(pipe.topPipe.xPosition + pipe.topPipe.width > 0){
+            return pipe;
+        }
+    })
 }
 
 function terminate(){
@@ -61,6 +72,11 @@ function PlayerWallCollisionCheck(){
 }
 
 function setup(){
+
+    backgroundImageList = [];
+    pipeList = [];
+    platformList = [];
+    pipeGenerationCount = 0;
 
     let backgroundCovered = 0;
     while(backgroundCovered < 2*canvas.width){
@@ -95,10 +111,18 @@ function animate(){
             imgObj.draw();
         });
 
+        pipeGenerationCount++;
+        if(pipeGenerationCount >= 200){
+            pipeGenerationCount = 0;
+            generatePipe();
+        }
+
         pipeList.forEach((imgObj)=>{
             imgObj.update();
             imgObj.draw();
-        })
+        });
+
+        updatePipeList();
 
         platformList.forEach((imgObj)=>{
             imgObj.update();
