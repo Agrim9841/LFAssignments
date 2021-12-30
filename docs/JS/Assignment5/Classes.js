@@ -89,14 +89,14 @@ function PipeObject(xPosition, yPosition, width, height){
     this.scored = false;
     this.topPipe = {
         xPosition: xPosition,
-        yPosition: yPosition - height - 70,
+        yPosition: yPosition - height - 80,
         width: width,
         height: height,
         image: pipeTopImage,
     }
     this.bottomPipe = {
         xPosition: xPosition,
-        yPosition: yPosition + 70,
+        yPosition: yPosition + 80,
         width: width,
         height: height,
         image: pipeBottomImage,
