@@ -7,3 +7,109 @@
     position: absolute;
 
 }
+
+.preloader{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: blue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.preloader h1{
+    color: gold;
+    font-size: 3rem;
+}
+
+.start-menu ,.scoreboard{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: green;
+    background-image: url("../images/table.png");
+    background-size: 100% 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    z-index: 9;
+    flex-direction: column;
+}
+
+.scoreboard{
+    z-index: 8;
+}
+
+.scoreboard, .start-menu{
+    display: none;
+}
+
+.turn-info{
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+    border: 10px solid brown;
+    color: yellow;
+    background-color: green;
+    padding: 10px;
+}
+
+.button-group{
+    width: 70%;
+    display: flex;
+    justify-content: space-around;
+}
+
+button{
+    font-size: 1.6rem;
+    padding: 10px 20px;
+    outline: none;
+    border: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.start-menu h1{
+    font-size: 3rem;
+    color: wheat;
+}
+
+.instructions{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: green;
+    background-image: url("../images/table.png");
+    background-size: 100% 100%;
+    padding: 10%;
+    box-sizing: border-box;
+    text-align: center;
+    z-index: 10;
+    display: none;
+    color: wheat;
+}
+
+.instructions h1, .scoreboard h1{
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.instructions li{
+    font-size: 1.4rem;
+    margin-top: 10px;
+}
+
+.board{
+    width: 80%;
+    display: flex;
+}
+
+.player1, .player2{
+    display: flex;
+    flex: 0.5;
+    justify-content: center;
+    color: wheat;
+    font-size: 2rem;
+}

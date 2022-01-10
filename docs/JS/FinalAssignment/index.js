@@ -3,9 +3,11 @@ const TABLE_WIDTH = 232;
 const TABLE_HEIGHT = 120;
 const TABLE_INNER_WIDTH = 224;
 const TABLE_INNER_HEIGHT = 112;
+const STICK_WIDTH = 144;
+const STICK_HEIGHT = 3;
 const LINE_POS = 55.6;
 const BALL_POSITIONS = [
-    {xPosition: 161.685, yPosition: 56.6425},
+    {xPosition: 161.685, yPosition: 63.3575},
     {xPosition: 168.4, yPosition: 53.82856},
     {xPosition: 175.115, yPosition: 56.6425},
     {xPosition: 175.115, yPosition: 70.0725},
@@ -20,7 +22,7 @@ const BALL_POSITIONS = [
     {xPosition: 175.115, yPosition: 49.9275},
     {xPosition: 175.115, yPosition: 63.3575},
     {xPosition: 168.4, yPosition: 66.17144},
-    {xPosition: 161.685, yPosition: 63.3575},
+    {xPosition: 161.685, yPosition: 56.6425},
     {xPosition: 154.97, yPosition: 60},
 ]
 const BALL_RADIUS = 2.8575;
@@ -29,6 +31,7 @@ const CORNER_WIDTH = TABLE_WIDTH - TABLE_INNER_WIDTH;
 let canvas = document.querySelector("#canvas1");
 let ctx = canvas.getContext("2d");
 let stick;
+let ballInHand;
 let table;
 let cue;
 

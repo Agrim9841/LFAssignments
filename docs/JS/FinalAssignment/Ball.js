@@ -69,7 +69,7 @@ function Ball(xPosition, yPosition, image, type){
         ctx.save();
         ctx.translate(this.xPosition, this.yPosition);
         ctx.globalAlpha = this.opacity;
-        ctx.drawImage(cueBallImage, -this.radius, -this.radius, this.radius * 2, this.radius * 2);
+        ctx.drawImage(this.image, -this.radius, -this.radius, this.radius * 2, this.radius * 2);
         ctx.restore();
     }
 
@@ -98,5 +98,20 @@ function Ball(xPosition, yPosition, image, type){
                 this.moving = true;
             }
         }
+    }
+}
+
+function BallInHand(){
+    this.xPosition = 0;
+    this.yPosition = 0;
+    this.radius = (BALL_RADIUS * canvas.width) / TABLE_WIDTH;
+
+    this.draw = function(){
+        ctx.drawImage(ballInHandImage, this.xPosition - this.radius, this.yPosition - this.radius * 1.5, this.radius*3, this.radius*3);
+    }
+
+    this.update = function(){
+        this.xPosition = mouse.xPosition;
+        this.yPosition = mouse.yPosition
     }
 }
