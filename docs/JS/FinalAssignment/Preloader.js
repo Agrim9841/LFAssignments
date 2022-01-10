@@ -1,4 +1,5 @@
-let assetsLoadingLeft = 9;
+let preloader = document.querySelector(".preloader");
+let assetsLoadingLeft = 13;
 
 let tableImage = new Image();
 tableImage.src = "./images/tablecloth.png";
@@ -48,6 +49,30 @@ cueBallImage.onload = function(){
     assetsLoadingLeft--;
 }
 
+let blackBallImage = new Image();
+blackBallImage.src = "./images/black_ball.png";
+blackBallImage.onload = function(){
+    assetsLoadingLeft--;
+}
+
+let halfBallImage = new Image();
+halfBallImage.src = "./images/yellow_ball.png";
+halfBallImage.onload = function(){
+    assetsLoadingLeft--;
+}
+
+let fullBallImage = new Image();
+fullBallImage.src = "./images/red_ball.png";
+fullBallImage.onload = function(){
+    assetsLoadingLeft--;
+}
+
+let ballInHandImage = new Image();
+ballInHandImage.src = "./images/ball_in_hand.png";
+ballInHandImage.onload = function(){
+    assetsLoadingLeft--;
+}
+
 let stickImage = new Image();
 stickImage.src = "./images/stick.png";
 stickImage.onload = function(){
@@ -57,7 +82,45 @@ stickImage.onload = function(){
 let checkPreloader = setInterval(() => {
     if(assetsLoadingLeft === 0){
         clearInterval(checkPreloader);
-        load();
-        animate();
+        
+        document.querySelector(".start-menu").style.display = "flex";
+
+        let count = 100;
+        let removePreloader = setInterval(() => {
+            if(count <= 0){
+                clearInterval(removePreloader);
+                preloader.style.display = "none";
+            }else{
+                count-=2;
+                preloader.style.opacity = count + "%";
+            }
+        }, 10);
     }
 }, 100);
+
+document.querySelector("#doublePlayer").addEventListener("click", function(){
+    document.querySelector(".start-menu").style.display = "none";
+    loadPlayer();
+    load();
+    animate();
+});
+
+document.querySelector("#playAgain").addEventListener("click", function(){
+    document.querySelector(".scoreboard").style.display = "none";
+    loadExistingPlayer();
+    load();
+    animate();
+});
+
+document.querySelector("#menu").addEventListener("click", function(){
+    document.querySelector(".scoreboard").style.display = "none";
+    document.querySelector(".start-menu").style.display = "flex";
+});
+
+document.querySelector("#openInstruction").addEventListener("click", function(){
+    document.querySelector(".instructions").style.display = "block";
+});
+
+document.querySelector("#closeInstruction").addEventListener("click", function(){
+    document.querySelector(".instructions").style.display = "none";
+});

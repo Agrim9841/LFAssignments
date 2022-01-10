@@ -4,6 +4,8 @@ function Stick(){
     this.rotation = 0;
     this.pullDistance = 5;
     this.power = 0;
+    this.width = (STICK_WIDTH * canvas.width) / TABLE_WIDTH;
+    this.height = (STICK_HEIGHT * canvas.width) / TABLE_WIDTH;
 
     this.draw = function (ballXPos, ballYPos, radius){
         
@@ -12,7 +14,7 @@ function Stick(){
         ctx.save();
         ctx.translate(this.xPosition, this.yPosition);
         ctx.rotate(this.rotation);
-        ctx.drawImage(stickImage, -stickImage.width-radius-this.pullDistance, stickImage.height/2, stickImage.width, -stickImage.height);
+        ctx.drawImage(stickImage, -this.width-radius-this.pullDistance, this.height/2, this.width, -this.height);
         ctx.restore();
     }
 

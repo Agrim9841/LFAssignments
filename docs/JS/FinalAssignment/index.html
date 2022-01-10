@@ -10,12 +10,50 @@
     <title>8 Ball Pool</title>
 </head>
 <body>
-    <div>
+    <div class="preloader">
+        <h1>Loading ...</h1>
+    </div>
+    <div class="instructions">
+        <h1>Instructions</h1>
+        <button id="closeInstruction">Close</button>
+        <ul>
+            <li>Press Left Mouse Button to draw Stick.</li>
+            <li>Release the Left Mouse Button to shoot the cue.</li>
+            <li>The yellow balls represents the half balls and the red balls represents the full ball.</li>
+        </ul>
+    </div>
+    <div class="start-menu">
+        <h1>8 Ball Pool</h1>
+        <div class="button-group">
+            <button id="doublePlayer">2 Player</button>
+            <button id="openInstruction">Instructions</button>
+        </div>
+    </div>
+    <div class="scoreboard">
+        <h1>ScoreBoard</h1>
+        <div class="board">
+            <div class="player1">
+                <div class="player1-name">Player1 - </div>
+                <div class="score1">0</div>
+            </div>
+            <div class="player2">
+                <div class="player2-name">Player2 - </div>
+                <div class="score2">0</div>
+            </div>
+        </div>
+        <div class="button-group">
+            <button id="playAgain">Play Again</button>
+            <button id="menu">Main Menu</button>
+        </div>
+    </div>
+    <div class="canvas-container">
         <canvas id="canvas1" class="canvas"></canvas>
+        <div class="turn-info">Player 1 Turn</div>
     </div>
 </body>
 <script src="./index.js"></script>
 <script src="./Mouse.js"></script>
+<script src="./Player.js"></script>
 <script src="./Table.js"></script>
 <script src="./Ball.js"></script>
 <script src="./Stick.js"></script>

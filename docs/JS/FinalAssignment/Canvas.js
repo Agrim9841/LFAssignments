@@ -3,7 +3,12 @@ let balls = [];
 let gameStates = ["ballInHand","preShoot", "postShoot", "turnCalc"];
 let gameState;
 let moving;
+let start = false;
+let players = [];
+let firstBreak = true;
+let ballsLeft;
 let turnDetail = {
+    turn: 0,
     firstBallTouched: "",
     pocketedBalls: [],
 }
@@ -24,11 +29,47 @@ document.onmouseup = function(event) {
         stick.power = 0;
         moving = true;
     }
+    else if(gameState == gameStates[0]){
+        let xTempPos = mouse.xPosition;
+        let yTempPos = mouse.yPosition;
+        let ok = checkCuePlacement(xTempPos, yTempPos);
+        if(ok){
+            cue.xPosition = xTempPos;
+            cue.yPosition = yTempPos;
+            cue.xSpeed = 0;
+            cue.ySpeed = 0;
+            cue.opacity = 1;
+            cue.pocketed = false;
+            cue.pocketing = false;
+
+            gameState = gameStates[1];
+        }
+    }
 }
 
 document.onmousemove = function(event) {
     mouse.xPosition = event.pageX;
     mouse.yPosition = event.pageY;
+}
+
+function checkCuePlacement(xTempPos, yTempPos){
+    if((xTempPos < (tableBorderWidth + cue.radius)) || 
+    (xTempPos > (table.width - tableBorderWidth - cue.radius)) || 
+    (yTempPos < (tableBorderWidth + cue.radius)) || 
+    (yTempPos > (table.height - tableBorderWidth - cue.radius))){
+        return false;
+    }
+    for(let i=0; i < balls.length; i++){
+        if(balls[i].pocketed || balls[i].pocketing){
+            continue;
+        }else{
+            let dist = calcDistance(balls[i].xPosition, balls[i].yPosition, xTempPos, yTempPos);
+            if(dist < (balls[i].radius + cue.radius)){
+                return false
+            }
+        }
+    }
+    return true;
 }
 
 function collisionAlgorithm(ball1, ball2){
@@ -103,13 +144,25 @@ function checkBallCollision(){
 
     for(let j = 0; j < balls.length; j++){
         let ball2 = balls[j];
-        collisionAlgorithm(cue, ball2);
+        if(!ball2.pocketed && !ball2.pocketing){
+            if(turnDetail.firstBallTouched == ""){
+                let dist = calcDistance(cue.xPosition, cue.yPosition, ball2.xPosition, ball2.yPosition);
+                if(dist < (cue.radius + ball2.radius)){
+                    turnDetail.firstBallTouched = ball2;
+                }
+            }
+            collisionAlgorithm(cue, ball2);
+        }
     }
     for(let i = 0; i < balls.length; i++){
         let ball1 = balls[i];
-        for(let j = i + 1; j < balls.length; j++){
-            let ball2 = balls[j];
-            collisionAlgorithm(ball1, ball2);
+        if(!ball1.pocketed && !ball1.pocketing){
+            for(let j = i + 1; j < balls.length; j++){
+                let ball2 = balls[j];
+                if(!ball2.pocketed || !ball2.pocketing){
+                    collisionAlgorithm(ball1, ball2);
+                }
+            }
         }
     }
 
@@ -181,7 +234,7 @@ function checkMoving(){
 }
 
 function pocketingAlgorithm(ball1){
-    if(!ball1.pocketing || !ball1.pocketed){
+    if(!ball1.pocketing && !ball1.pocketed){
         table.pockets.forEach(pocket => {
             let distance = calcDistance(ball1.xPosition, ball1.yPosition, pocket.xPosition, pocket.yPosition);
             if(distance < (pocket.radius)){
@@ -212,98 +265,326 @@ function nextFrame(){
     requestAnimationFrame(animate);
 }
 
+function loadExistingPlayer(){
+    players[0].ball = "";
+    players[1].ball = "";
+}
+
+function loadPlayer(){
+    let player1 = new Player("user", "Player1");
+    let player2 = new Player("user", "Player2");
+    players.push(player1);
+    players.push(player2);
+}
+
 function load(){
     table = new Table();
     tableBorderWidth = table.cornorThickness;
+    document.querySelector(".turn-info").style.top = `${table.height}px`;
     
     balls = [];
     for(let i = 0; i < 15; i++){
-        if(i<8){
-            let newBall = new Ball(BALL_POSITIONS[i].xPosition, BALL_POSITIONS[i].yPosition, cueBallImage, "half");
+        if(i<7){
+            let newBall = new Ball(BALL_POSITIONS[i].xPosition, BALL_POSITIONS[i].yPosition, halfBallImage, "half");
             balls.push(newBall);
-        }else if(i==8){
-            let newBall = new Ball(BALL_POSITIONS[i].xPosition, BALL_POSITIONS[i].yPosition, cueBallImage, "half");
+        }else if(i==7){
+            let newBall = new Ball(BALL_POSITIONS[i].xPosition, BALL_POSITIONS[i].yPosition, blackBallImage, "black");
             balls.push(newBall);
-        }else if(i>8){
-            let newBall = new Ball(BALL_POSITIONS[i].xPosition, BALL_POSITIONS[i].yPosition, cueBallImage, "half");
+        }else if(i>7){
+            let newBall = new Ball(BALL_POSITIONS[i].xPosition, BALL_POSITIONS[i].yPosition, fullBallImage, "full");
             balls.push(newBall);
         }
         
     }
     stick = new Stick();
+    ballInHand = new BallInHand();
     cue = new Cue();
     cue.xPosition = table.linePos + table.cornorThickness;
     cue.yPosition = canvas.height / 2;
     gameState = gameStates[1];
     moving = false;
-    turnDetail = {
-        firstBallTouched: "",
-        pocketedBalls: [],
-    }
-}
-
-function animate(){
-    clearCanvas();
-    table.draw();
-
-    balls.forEach(ball => {
-        if(!ball.pocketed){
-            ball.draw();
-            ball.update();
-        }
-    });
-    
-    if(gameState == gameStates[1]){
-
-        stick.update();
-        if(mouse.pressed === true){
-            if(stick.power >= 2900){
-                stick.power = 2900;
-            }else{
-                stick.pullDistance++;
-                stick.power += 50;
-            }
-        }
-        stick.draw(cue.xPosition, cue.yPosition, cue.radius);
-    }
-    else if(gameState == gameStates[2]){
-        checkBallPocketing();
-        
-        checkMoving();
-        if(moving === false){
-            gameState = gameStates[3];
-        }
-
-    }
-    else if(gameState == gameStates[3]){
-        if(turnDetail.pocketedBalls.length > 0){
-            turnDetail.pocketedBalls.forEach((item)=> {
-                if(item.type == "cue"){
-                    gameState = gameStates[0];
-                }
-            })
-        }else{
-            gameState = gameStates[1];
-        }
+    firstBreak = true;
+    if(players[1].justWon){
         turnDetail = {
+            turn: 1,
             firstBallTouched: "",
             pocketedBalls: [],
         }
-    }
-    else if(gameState == gameStates[0]){
-        cue.xPosition = table.linePos + table.cornorThickness;
-        cue.yPosition = table.height / 2;
-        cue.opacity = 1;
-        cue.pocketed = false;
-        cue.pocketing = false;
-
-        gameState = gameStates[1];
+        document.querySelector(".turn-info").innerText = `${players[1].name} Turn, ${players[1].ball}`;
+    }else{
+        turnDetail = {
+            turn: 0,
+            firstBallTouched: "",
+            pocketedBalls: [],
+        }
+        document.querySelector(".turn-info").innerText = `${players[0].name} Turn, ${players[0].ball}`;
     }
     
-    checkWallCollision();
-    checkBallCollision();
-    cue.draw();
-    cue.update();
+    start = true;
+}
 
-    nextFrame();
+function endGame(){
+    if(players[turnDetail.turn].ball == ""){
+        if(turnDetail.turn == 0){
+            players[1].winStreak++;
+            players[1].justWon = true;
+        }else if(turnDetail.turn == 1){
+            players[0].winStreak++;
+            players[0].justWon = true;
+        }
+    }else{
+        ballsLeft = 0;
+        balls.forEach(ball=>{
+            if(ball.type == players[turnDetail.turn].ball){
+                if(ball.pocketed == false){
+                    ballsLeft++
+                }
+            }
+        });
+        if(ballsLeft == 0){
+            let cuePocketed = false;
+            turnDetail.pocketedBalls.forEach((item)=> {
+                if(item.type == "cue"){
+                    cuePocketed = true;
+                }
+            });
+            if(cuePocketed){
+                if(turnDetail.turn == 0){
+                    players[1].winStreak++;
+                    players[1].justWon = true;
+                }else if(turnDetail.turn == 1){
+                    players[0].winStreak++;
+                    players[0].justWon = true;
+                }
+            }else{
+                if(turnDetail.turn == 1){
+                    players[1].winStreak++;
+                    players[1].justWon = true;
+                }else if(turnDetail.turn == 0){
+                    players[0].winStreak++;
+                    players[0].justWon = true;
+                }
+            }
+        }else{
+            if(turnDetail.turn == 0){
+                players[1].winStreak++;
+                players[1].justWon = true;
+            }else if(turnDetail.turn == 1){
+                players[0].winStreak++;
+                players[0].justWon = true;
+            }
+        }
+    }
+    start = false;
+    document.querySelector(".score1").innerText = players[0].winStreak;
+    document.querySelector(".score2").innerText = players[1].winStreak;
+    document.querySelector(".scoreboard").style.display = "flex"
+}
+
+function animate(){
+    if(start){
+        clearCanvas();
+        table.draw();
+
+        balls.forEach(ball => {
+            if(!ball.pocketed){
+                ball.draw();
+                ball.update();
+            }
+        });
+        
+        if(gameState == gameStates[1]){
+
+            stick.update();
+            if(mouse.pressed === true){
+                if(stick.power >= 2900){
+                    stick.power = 2900;
+                }else{
+                    stick.pullDistance++;
+                    stick.power += 50;
+                }
+            }
+            stick.draw(cue.xPosition, cue.yPosition, cue.radius);
+        }
+        else if(gameState == gameStates[2]){
+            checkBallPocketing();
+            
+            checkMoving();
+            if(moving === false){
+                gameState = gameStates[3];
+            }
+
+        }
+        else if(gameState == gameStates[3]){
+            if(turnDetail.pocketedBalls.length > 0){
+
+                turnDetail.pocketedBalls.forEach((item)=> {
+                    if(item.type == "black"){
+                        endGame();
+                    }
+                });
+
+                let foul = false;
+
+                if(firstBreak == false){
+                    if(players[turnDetail.turn].ball != ""){
+                        foul = true;
+                        for(let i=0; i< turnDetail.pocketedBalls.length;i++){
+                            console.log(players[turnDetail.turn].ball, turnDetail.pocketedBalls[i].type);
+                            console.log(players[turnDetail.turn].ball== turnDetail.pocketedBalls[i].type);
+                            if(players[turnDetail.turn].ball == turnDetail.pocketedBalls[i].type){
+                                foul = false;
+                                break;
+                            }
+                        }
+
+                        if(turnDetail.firstBallTouched.type != players[turnDetail.turn].ball){
+                            foul = true;
+                        }
+                    }else{
+                        if(turnDetail.firstBallTouched.type == "black" || turnDetail.firstBallTouched == ""){
+                            foul = true;
+                        }
+                    }
+                }
+                
+
+                turnDetail.pocketedBalls.forEach((item)=> {
+                    if(item.type == "cue"){
+                        foul = true;
+                    }
+                });
+
+
+                if(foul == true){
+                    gameState = gameStates[0];
+                    if(turnDetail.turn == 0){
+                        turnDetail = {
+                            turn: 1,
+                            firstBallTouched: "",
+                            pocketedBalls: [],
+                        }
+                        document.querySelector(".turn-info").innerText = `${players[1].name} Turn, ${players[1].ball}`;
+                    }else if(turnDetail.turn == 1){
+                        turnDetail = {
+                            turn: 0,
+                            firstBallTouched: "",
+                            pocketedBalls: [],
+                        }
+                        document.querySelector(".turn-info").innerText = `${players[0].name} Turn, ${players[0].ball}`;
+                    }
+                }else{
+                    if(firstBreak == false){
+                        if(players[turnDetail.turn].ball == ""){
+                            if(turnDetail.firstBallTouched.type == turnDetail.pocketedBalls[0].type){
+
+                                //assigning balls
+                                if(turnDetail.turn == 0){
+                                    if(turnDetail.pocketedBalls[0].type == "half"){
+                                        players[0].ball = "half";
+                                        players[1].ball = "full";
+                                    }else if(turnDetail.pocketedBalls[0].type == "full"){
+                                        players[0].ball = "full";
+                                        players[1].ball = "half";
+                                    }
+                                }if(turnDetail.turn == 1){
+                                    if(turnDetail.pocketedBalls[0].type == "half"){
+                                        players[1].ball = "half";
+                                        players[0].ball = "full";
+                                    }else if(turnDetail.pocketedBalls[0].type == "full"){
+                                        players[1].ball = "full";
+                                        players[0].ball = "half";
+                                    }
+                                }
+                                
+                            }
+                        }
+                    }
+                    
+                    gameState = gameStates[1];
+                    if(turnDetail.turn == 1){
+                        turnDetail = {
+                            turn: 1,
+                            firstBallTouched: "",
+                            pocketedBalls: [],
+                        }
+                        document.querySelector(".turn-info").innerText = `${players[1].name} Turn, ${players[1].ball}`;
+                    }else if(turnDetail.turn == 0){
+                        turnDetail = {
+                            turn: 0,
+                            firstBallTouched: "",
+                            pocketedBalls: [],
+                        }
+                        document.querySelector(".turn-info").innerText = `${players[0].name} Turn, ${players[0].ball}`;
+                    }
+                }
+                
+            }else{
+                if(players[turnDetail.turn].ball != ""){
+                    console.log(players[turnDetail.turn].ball, turnDetail.firstBallTouched.type)
+                    console.log(players[turnDetail.turn].ball== turnDetail.firstBallTouched.type)
+                    if(players[turnDetail.turn].ball == turnDetail.firstBallTouched.type){
+                        gameState = gameStates[1];
+                    }else if(turnDetail.firstBallTouched.type == "black"){
+                        ballsLeft = 0;
+                        balls.forEach((ball)=>{
+                            if(ball.type == players[turnDetail.turn].ball){
+                                if(ball.pocketed == false){
+                                    ballsLeft++;
+                                }
+                            }
+                        });
+                        if(ballsLeft == 0){
+                            gameState = gameStates[1];
+                        }else{
+                            gameState = gameStates[0];
+                        }
+                    }
+                    else{
+                        gameState = gameStates[0];
+                    }
+                }else{
+                    if(turnDetail.firstBallTouched.type == "black" || turnDetail.firstBallTouched == ""){
+                        gameState = gameStates[0];
+                    }else{
+                        gameState = gameStates[1];
+                    }
+                    
+                }
+                if(turnDetail.turn == 0){
+                    turnDetail = {
+                        turn: 1,
+                        firstBallTouched: "",
+                        pocketedBalls: [],
+                    }
+                    document.querySelector(".turn-info").innerText = `${players[1].name} Turn, ${players[1].ball}`;
+                }else if(turnDetail.turn == 1){
+                    turnDetail = {
+                        turn: 0,
+                        firstBallTouched: "",
+                        pocketedBalls: [],
+                    }
+                    document.querySelector(".turn-info").innerText = `${players[0].name} Turn, ${players[0].ball}`;
+                }
+            }
+            if(firstBreak== true){
+                firstBreak = false;
+            }
+        }
+        else if(gameState == gameStates[0]){
+            ballInHand.update();
+            ballInHand.draw();
+        }
+        
+        checkWallCollision();
+        checkBallCollision();
+        
+        if(gameState != gameStates[0]){
+            cue.draw();
+            cue.update();
+        }
+
+        nextFrame();
+    }
+    
 }
