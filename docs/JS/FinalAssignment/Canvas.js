@@ -20,31 +20,33 @@ document.onmousedown = function(event) {
 }
 
 document.onmouseup = function(event) {
-    mouse.pressed = false;
-    if(gameState == gameStates[1]){
-        gameState = gameStates[2];
-        cue.shoot(stick.power, stick.rotation);
-        cue.moving = true;
-        stick.pullDistance = 5;
-        stick.power = 0;
-        moving = true;
-    }
-    else if(gameState == gameStates[0]){
-        let xTempPos = mouse.xPosition;
-        let yTempPos = mouse.yPosition;
-        let ok = checkCuePlacement(xTempPos, yTempPos);
-        if(ok){
-            cue.xPosition = xTempPos;
-            cue.yPosition = yTempPos;
-            cue.xSpeed = 0;
-            cue.ySpeed = 0;
-            cue.opacity = 1;
-            cue.pocketed = false;
-            cue.pocketing = false;
+    if(mouse.pressed == true){
+        if(gameState == gameStates[1]){
+            gameState = gameStates[2];
+            cue.shoot(stick.power, stick.rotation);
+            cue.moving = true;
+            stick.pullDistance = 5;
+            stick.power = 0;
+            moving = true;
+        }
+        else if(gameState == gameStates[0]){
+            let xTempPos = mouse.xPosition;
+            let yTempPos = mouse.yPosition;
+            let ok = checkCuePlacement(xTempPos, yTempPos);
+            if(ok){
+                cue.xPosition = xTempPos;
+                cue.yPosition = yTempPos;
+                cue.xSpeed = 0;
+                cue.ySpeed = 0;
+                cue.opacity = 1;
+                cue.pocketed = false;
+                cue.pocketing = false;
 
-            gameState = gameStates[1];
+                gameState = gameStates[1];
+            }
         }
     }
+    mouse.pressed = false;
 }
 
 document.onmousemove = function(event) {
@@ -70,6 +72,100 @@ function checkCuePlacement(xTempPos, yTempPos){
         }
     }
     return true;
+}
+
+function drawGuide(){
+    let tempxPos;
+    let tempyPos;
+    let reflectedxPos;
+    let reflectedyPos;
+
+    let slope = (mouse.yPosition - cue.yPosition) / (mouse.xPosition - cue.xPosition);
+    let c = cue.yPosition - (slope * cue.xPosition);
+    let reflectedSlope = -slope;
+    let reflectedC;
+
+    if((mouse.xPosition - cue.xPosition) > 0){
+        tempxPos = table.width - tableBorderWidth - cue.radius;
+        tempyPos = (slope * tempxPos) + c;
+        if((mouse.yPosition - cue.yPosition) > 0){
+            if(tempyPos > table.height - tableBorderWidth -cue.radius ){
+                tempyPos = table.height - tableBorderWidth -cue.radius;
+                tempxPos = (tempyPos - c) / slope;
+
+                reflectedC = tempyPos - (reflectedSlope * tempxPos);
+                reflectedyPos = tempyPos - 40;
+                reflectedxPos = (reflectedyPos - reflectedC) / reflectedSlope;
+            }else{
+                reflectedC = tempyPos - (reflectedSlope * tempxPos);
+                reflectedxPos = tempxPos - 40;
+                reflectedyPos = (reflectedSlope * reflectedxPos) + reflectedC;
+            }
+        }else if((mouse.yPosition - cue.yPosition) < 0){
+            if(tempyPos < tableBorderWidth + cue.radius ){
+                tempyPos = tableBorderWidth + cue.radius;
+                tempxPos = (tempyPos - c) / slope;
+
+                reflectedC = tempyPos - (reflectedSlope * tempxPos);
+                reflectedyPos = tempyPos + 40;
+                reflectedxPos = (reflectedyPos - reflectedC) / reflectedSlope;
+            }else{
+                reflectedC = tempyPos - (reflectedSlope * tempxPos);
+                reflectedxPos = tempxPos - 40;
+                reflectedyPos = (reflectedSlope * reflectedxPos) + reflectedC;
+            }
+        }
+    }else if((mouse.xPosition - cue.xPosition) < 0){
+        tempxPos = tableBorderWidth + cue.radius;
+        tempyPos = (slope * tempxPos) + c;
+        if((mouse.yPosition - cue.yPosition) > 0){
+            if(tempyPos > table.height - tableBorderWidth -cue.radius ){
+                tempyPos = table.height - tableBorderWidth -cue.radius;
+                tempxPos = (tempyPos - c) / slope;
+
+                reflectedC = tempyPos - (reflectedSlope * tempxPos);
+                reflectedyPos = tempyPos - 40;
+                reflectedxPos = (reflectedyPos - reflectedC) / reflectedSlope;
+            }else{
+                reflectedC = tempyPos - (reflectedSlope * tempxPos);
+                reflectedxPos = tempxPos + 40;
+                reflectedyPos = (reflectedSlope * reflectedxPos) + reflectedC;
+            }
+        }else if((mouse.yPosition - cue.yPosition) < 0){
+            if(tempyPos < tableBorderWidth + cue.radius ){
+                tempyPos = tableBorderWidth + cue.radius;
+                tempxPos = (tempyPos - c) / slope;
+
+                reflectedC = tempyPos - (reflectedSlope * tempxPos);
+                reflectedyPos = tempyPos + 40;
+                reflectedxPos = (reflectedyPos - reflectedC) / reflectedSlope;
+            }else{
+                reflectedC = tempyPos - (reflectedSlope * tempxPos);
+                reflectedxPos = tempxPos + 40;
+                reflectedyPos = (reflectedSlope * reflectedxPos) + reflectedC;
+            }
+        }
+    }
+
+    ctx.beginPath();
+    ctx.moveTo(cue.xPosition, cue.yPosition);
+    ctx.lineTo(tempxPos, tempyPos);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(tempxPos, tempyPos);
+    ctx.lineTo(reflectedxPos, reflectedyPos);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(tempxPos, tempyPos, cue.radius, 0, 2 * Math.PI);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.lineWidth = 2;
+    ctx.arc(mouse.xPosition, mouse.yPosition, cue.radius, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.lineWidth = 1;
 }
 
 function collisionAlgorithm(ball1, ball2){
@@ -397,8 +493,8 @@ function animate(){
 
             stick.update();
             if(mouse.pressed === true){
-                if(stick.power >= 2900){
-                    stick.power = 2900;
+                if(stick.power >= 3300){
+                    stick.power = 3300;
                 }else{
                     stick.pullDistance++;
                     stick.power += 50;
@@ -579,6 +675,9 @@ function animate(){
         checkWallCollision();
         checkBallCollision();
         
+        if(gameState == gameStates[1]){
+            drawGuide();
+        }
         if(gameState != gameStates[0]){
             cue.draw();
             cue.update();
