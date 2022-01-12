@@ -100,7 +100,14 @@ let checkPreloader = setInterval(() => {
 
 document.querySelector("#doublePlayer").addEventListener("click", function(){
     document.querySelector(".start-menu").style.display = "none";
-    loadPlayer();
+    load2Player();
+    load();
+    animate();
+});
+
+document.querySelector("#singlePlayer").addEventListener("click", function(){
+    document.querySelector(".start-menu").style.display = "none";
+    load1Player();
     load();
     animate();
 });

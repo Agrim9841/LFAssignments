@@ -5,6 +5,7 @@ function Table(){
     this.linePos = (LINE_POS * canvas.width) / TABLE_WIDTH;
     this.pockets = [
         {
+            name: "topleft",
             image: cornerHoleImage,
             xPosition: this.cornorThickness,
             yPosition: this.cornorThickness,
@@ -12,6 +13,7 @@ function Table(){
             radius: this.cornorThickness,
         },
         {
+            name: "topright",
             image: cornerHoleImage,
             xPosition: this.width - this.cornorThickness,
             yPosition: this.cornorThickness,
@@ -19,6 +21,7 @@ function Table(){
             radius: this.cornorThickness,
         },
         {
+            name: "bottomleft",
             image: cornerHoleImage,
             xPosition: this.cornorThickness,
             yPosition: this.height - this.cornorThickness,
@@ -26,6 +29,7 @@ function Table(){
             radius: this.cornorThickness,
         },
         {
+            name: "bottomright",
             image: cornerHoleImage,
             xPosition: this.width - this.cornorThickness,
             yPosition: this.height - this.cornorThickness,
@@ -33,6 +37,7 @@ function Table(){
             radius: this.cornorThickness,
         },
         {
+            name: "topcenter",
             image: centerHoleImage,
             xPosition: this.width / 2,
             yPosition: this.cornorThickness,
@@ -40,6 +45,7 @@ function Table(){
             radius: this.cornorThickness / 1.5,
         },
         {
+            name: "bottomcenter",
             image: centerHoleImage,
             xPosition: this.width / 2,
             yPosition: this.height - this.cornorThickness,

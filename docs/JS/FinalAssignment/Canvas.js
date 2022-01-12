@@ -22,27 +22,31 @@ document.onmousedown = function(event) {
 document.onmouseup = function(event) {
     if(mouse.pressed == true){
         if(gameState == gameStates[1]){
-            gameState = gameStates[2];
-            cue.shoot(stick.power, stick.rotation);
-            cue.moving = true;
-            stick.pullDistance = 5;
-            stick.power = 0;
-            moving = true;
+            if(players[turnDetail.turn].type != "computer"){
+                gameState = gameStates[2];
+                cue.shoot(stick.power, stick.rotation);
+                cue.moving = true;
+                stick.pullDistance = 5;
+                stick.power = 0;
+                moving = true;
+            }
         }
         else if(gameState == gameStates[0]){
-            let xTempPos = mouse.xPosition;
-            let yTempPos = mouse.yPosition;
-            let ok = checkCuePlacement(xTempPos, yTempPos);
-            if(ok){
-                cue.xPosition = xTempPos;
-                cue.yPosition = yTempPos;
-                cue.xSpeed = 0;
-                cue.ySpeed = 0;
-                cue.opacity = 1;
-                cue.pocketed = false;
-                cue.pocketing = false;
+            if(players[turnDetail.turn].type != "computer"){
+                let xTempPos = mouse.xPosition;
+                let yTempPos = mouse.yPosition;
+                let ok = checkCuePlacement(xTempPos, yTempPos);
+                if(ok){
+                    cue.xPosition = xTempPos;
+                    cue.yPosition = yTempPos;
+                    cue.xSpeed = 0;
+                    cue.ySpeed = 0;
+                    cue.opacity = 1;
+                    cue.pocketed = false;
+                    cue.pocketing = false;
 
-                gameState = gameStates[1];
+                    gameState = gameStates[1];
+                }
             }
         }
     }
@@ -366,7 +370,15 @@ function loadExistingPlayer(){
     players[1].ball = "";
 }
 
-function loadPlayer(){
+function load1Player(){
+    let player1 = new Player("user", "Player1");
+    let player2 = new Player("computer", "Player2");
+    computer = new Computer();
+    players.push(player1);
+    players.push(player2);
+}
+
+function load2Player(){
     let player1 = new Player("user", "Player1");
     let player2 = new Player("user", "Player2");
     players.push(player1);
@@ -490,17 +502,33 @@ function animate(){
         });
         
         if(gameState == gameStates[1]){
-
-            stick.update();
-            if(mouse.pressed === true){
-                if(stick.power >= 3300){
-                    stick.power = 3300;
+            if(players[turnDetail.turn].type == "computer"){
+                if(!computer.adjusted){
+                    computer.getShootValues(table, balls, players[turnDetail.turn], cue);
                 }else{
-                    stick.pullDistance++;
-                    stick.power += 50;
+                    computer.adjusted = false;
+                }
+                
+                gameState = gameStates[2];
+                cue.shoot(computer.power, computer.angle);
+                cue.moving = true;
+                stick.pullDistance = 5;
+                stick.power = 0;
+                moving = true;
+            }else{
+                
+                if(mouse.pressed === true){
+                    if(stick.power >= 3300){
+                        stick.power = 3300;
+                    }else{
+                        stick.pullDistance++;
+                        stick.power += 50;
+                    }
                 }
             }
+            stick.update();
             stick.draw(cue.xPosition, cue.yPosition, cue.radius);
+            
         }
         else if(gameState == gameStates[2]){
             checkBallPocketing();
@@ -668,8 +696,23 @@ function animate(){
             }
         }
         else if(gameState == gameStates[0]){
-            ballInHand.update();
-            ballInHand.draw();
+            if(players[turnDetail.turn].type == "computer"){
+                computer.getCuePos(table, balls, players[turnDetail.turn]);
+                
+                cue.xPosition = computer.xPosition;
+                cue.yPosition = computer.yPosition;
+                cue.xSpeed = 0;
+                cue.ySpeed = 0;
+                cue.opacity = 1;
+                cue.pocketed = false;
+                cue.pocketing = false;
+
+                gameState = gameStates[1];
+            }
+            else{
+                ballInHand.update();
+                ballInHand.draw();
+            }
         }
         
         checkWallCollision();
