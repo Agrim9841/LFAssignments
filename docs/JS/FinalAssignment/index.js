@@ -34,6 +34,7 @@ let stick;
 let ballInHand;
 let table;
 let cue;
+let computer;
 
 canvas.width = window.innerWidth;
 canvas.height = (TABLE_HEIGHT * canvas.width) / TABLE_WIDTH;
