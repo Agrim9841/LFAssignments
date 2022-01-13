@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="./styles/styles.css">
 
     <title>8 Ball Pool</title>
@@ -18,8 +22,9 @@
         <button id="closeInstruction">Close</button>
         <ul>
             <li>Press Left Mouse Button to draw Stick.</li>
+            <li>You can press anywhere on the screen to draw Stick.</li>
             <li>Release the Left Mouse Button to shoot the cue.</li>
-            <li>The yellow balls represents the half balls and the red balls represents the full ball.</li>
+           
         </ul>
     </div>
     <div class="start-menu">
@@ -48,8 +53,11 @@
         </div>
     </div>
     <div class="canvas-container">
+        <div class="turn-info">
+            <div class="ball-info"></div>
+            <div class="player-turn-info"></div>
+        </div>
         <canvas id="canvas1" class="canvas"></canvas>
-        <div class="turn-info">Player 1 Turn</div>
     </div>
 </body>
 <script src="./index.js"></script>

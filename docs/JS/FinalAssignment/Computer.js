@@ -42,7 +42,7 @@ function Computer(){
                                 let dist = numerator / denomenator;
                                 if(dist < 2*this.cue.radius){
                                     decided = false;
-                                    console.log("hello");
+                                    break;
                                 }
                             }
                         }

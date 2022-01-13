@@ -54,8 +54,9 @@ document.onmouseup = function(event) {
 }
 
 document.onmousemove = function(event) {
-    mouse.xPosition = event.pageX;
-    mouse.yPosition = event.pageY;
+    var rect = canvas.getBoundingClientRect();
+    mouse.xPosition = event.clientX - rect.left;
+    mouse.yPosition = event.clientY - rect.top;
 }
 
 function checkCuePlacement(xTempPos, yTempPos){
@@ -385,10 +386,20 @@ function load2Player(){
     players.push(player2);
 }
 
+function updateUITurn(player){
+    document.querySelector(".player-turn-info").innerText = `${player.name}`;
+    if(player.ball == "half"){
+        document.querySelector(".ball-info").style.backgroundImage = `url("./images/half_decided.png")`;
+    }else if(player.ball == "full"){
+        document.querySelector(".ball-info").style.backgroundImage = `url("./images/full_decided.png")`;
+    }else{
+        document.querySelector(".ball-info").style.backgroundImage = `url("./images/no_ball_decided.png")`;
+    }
+}
+
 function load(){
     table = new Table();
     tableBorderWidth = table.cornorThickness;
-    document.querySelector(".turn-info").style.top = `${table.height}px`;
     
     balls = [];
     for(let i = 0; i < 15; i++){
@@ -418,14 +429,14 @@ function load(){
             firstBallTouched: "",
             pocketedBalls: [],
         }
-        document.querySelector(".turn-info").innerText = `${players[1].name} Turn, ${players[1].ball}`;
+        updateUITurn(players[1]);
     }else{
         turnDetail = {
             turn: 0,
             firstBallTouched: "",
             pocketedBalls: [],
         }
-        document.querySelector(".turn-info").innerText = `${players[0].name} Turn, ${players[0].ball}`;
+        updateUITurn(players[0]);
     }
     
     start = true;
@@ -588,14 +599,14 @@ function animate(){
                             firstBallTouched: "",
                             pocketedBalls: [],
                         }
-                        document.querySelector(".turn-info").innerText = `${players[1].name} Turn, ${players[1].ball}`;
+                        updateUITurn(players[1]);
                     }else if(turnDetail.turn == 1){
                         turnDetail = {
                             turn: 0,
                             firstBallTouched: "",
                             pocketedBalls: [],
                         }
-                        document.querySelector(".turn-info").innerText = `${players[0].name} Turn, ${players[0].ball}`;
+                        updateUITurn(players[0]);
                     }
                 }else{
                     if(firstBreak == false){
@@ -632,14 +643,14 @@ function animate(){
                             firstBallTouched: "",
                             pocketedBalls: [],
                         }
-                        document.querySelector(".turn-info").innerText = `${players[1].name} Turn, ${players[1].ball}`;
+                        updateUITurn(players[1]);
                     }else if(turnDetail.turn == 0){
                         turnDetail = {
                             turn: 0,
                             firstBallTouched: "",
                             pocketedBalls: [],
                         }
-                        document.querySelector(".turn-info").innerText = `${players[0].name} Turn, ${players[0].ball}`;
+                        updateUITurn(players[0]);
                     }
                 }
                 
@@ -681,14 +692,14 @@ function animate(){
                         firstBallTouched: "",
                         pocketedBalls: [],
                     }
-                    document.querySelector(".turn-info").innerText = `${players[1].name} Turn, ${players[1].ball}`;
+                    updateUITurn(players[1]);
                 }else if(turnDetail.turn == 1){
                     turnDetail = {
                         turn: 0,
                         firstBallTouched: "",
                         pocketedBalls: [],
                     }
-                    document.querySelector(".turn-info").innerText = `${players[0].name} Turn, ${players[0].ball}`;
+                    updateUITurn(players[0]);
                 }
             }
             if(firstBreak== true){

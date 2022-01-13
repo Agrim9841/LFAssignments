@@ -36,7 +36,7 @@ let table;
 let cue;
 let computer;
 
-canvas.width = window.innerWidth;
+canvas.width = 1000;
 canvas.height = (TABLE_HEIGHT * canvas.width) / TABLE_WIDTH;
 
 function degToRad(deg){
