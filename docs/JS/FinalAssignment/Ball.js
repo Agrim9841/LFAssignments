@@ -24,6 +24,9 @@ function Cue(){
             cue.pocketin = false;
         }else if(this.pocketing){
             if(this.opacity <= 0){
+                let pocketAudioCopy = pocketAudio.cloneNode();
+                pocketAudioCopy.volume = 0.2;
+                pocketAudioCopy.play();
                 this.opacity = 0;
                 this.pocketed = true;
                 this.moving = false;
@@ -78,6 +81,9 @@ function Ball(xPosition, yPosition, image, type){
             //
         }else if(this.pocketing){
             if(this.opacity <= 0){
+                let pocketAudioCopy = pocketAudio.cloneNode();
+                pocketAudioCopy.volume = 0.2;
+                pocketAudioCopy.play();
                 this.opacity = 0;
                 this.pocketed = true;
                 this.moving = false;
