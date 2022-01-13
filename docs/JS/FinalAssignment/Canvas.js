@@ -224,6 +224,8 @@ function collisionAlgorithm(ball1, ball2){
         // update velocities
         ball1.xSpeed = xV1TTag + xV1NTag;
         ball1.ySpeed = yV1TTag + yV1NTag;
+        ball1.xSpeed = ball1.xSpeed * (0.98 ** 3);
+        ball1.ySpeed = ball1.ySpeed * (0.98 ** 3);
         while(Math.abs(ball1.xSpeed) > 30 || Math.abs(ball1.ySpeed) > 30){
             ball1.xSpeed = ball1.xSpeed * (0.98 ** 3);
             ball1.ySpeed = ball1.ySpeed * (0.98 ** 3);
@@ -231,6 +233,8 @@ function collisionAlgorithm(ball1, ball2){
         
         ball2.xSpeed = xV2TTag + xV2NTag;
         ball2.ySpeed = yV2TTag + yV2NTag;
+        ball2.xSpeed = ball2.xSpeed * (0.98 ** 3);
+        ball2.ySpeed = ball2.ySpeed * (0.98 ** 3);
         while(Math.abs(ball2.xSpeed) > 30 || Math.abs(ball2.ySpeed) > 30){
             ball2.xSpeed = ball2.xSpeed * (0.98 ** 3);
             ball2.ySpeed = ball2.ySpeed * (0.98 ** 3);
