@@ -54,8 +54,9 @@ document.onmouseup = function(event) {
 }
 
 document.onmousemove = function(event) {
-    mouse.xPosition = event.pageX;
-    mouse.yPosition = event.pageY;
+    var rect = canvas.getBoundingClientRect();
+    mouse.xPosition = event.clientX - rect.left;
+    mouse.yPosition = event.clientY - rect.top;
 }
 
 function checkCuePlacement(xTempPos, yTempPos){
@@ -223,6 +224,8 @@ function collisionAlgorithm(ball1, ball2){
         // update velocities
         ball1.xSpeed = xV1TTag + xV1NTag;
         ball1.ySpeed = yV1TTag + yV1NTag;
+        ball1.xSpeed = ball1.xSpeed * (0.98 ** 3);
+        ball1.ySpeed = ball1.ySpeed * (0.98 ** 3);
         while(Math.abs(ball1.xSpeed) > 30 || Math.abs(ball1.ySpeed) > 30){
             ball1.xSpeed = ball1.xSpeed * (0.98 ** 3);
             ball1.ySpeed = ball1.ySpeed * (0.98 ** 3);
@@ -230,6 +233,8 @@ function collisionAlgorithm(ball1, ball2){
         
         ball2.xSpeed = xV2TTag + xV2NTag;
         ball2.ySpeed = yV2TTag + yV2NTag;
+        ball2.xSpeed = ball2.xSpeed * (0.98 ** 3);
+        ball2.ySpeed = ball2.ySpeed * (0.98 ** 3);
         while(Math.abs(ball2.xSpeed) > 30 || Math.abs(ball2.ySpeed) > 30){
             ball2.xSpeed = ball2.xSpeed * (0.98 ** 3);
             ball2.ySpeed = ball2.ySpeed * (0.98 ** 3);
@@ -385,10 +390,20 @@ function load2Player(){
     players.push(player2);
 }
 
+function updateUITurn(player){
+    document.querySelector(".player-turn-info").innerText = `${player.name}`;
+    if(player.ball == "half"){
+        document.querySelector(".ball-info").style.backgroundImage = `url("./images/half_decided.png")`;
+    }else if(player.ball == "full"){
+        document.querySelector(".ball-info").style.backgroundImage = `url("./images/full_decided.png")`;
+    }else{
+        document.querySelector(".ball-info").style.backgroundImage = `url("./images/no_ball_decided.png")`;
+    }
+}
+
 function load(){
     table = new Table();
     tableBorderWidth = table.cornorThickness;
-    document.querySelector(".turn-info").style.top = `${table.height}px`;
     
     balls = [];
     for(let i = 0; i < 15; i++){
@@ -418,14 +433,14 @@ function load(){
             firstBallTouched: "",
             pocketedBalls: [],
         }
-        document.querySelector(".turn-info").innerText = `${players[1].name} Turn, ${players[1].ball}`;
+        updateUITurn(players[1]);
     }else{
         turnDetail = {
             turn: 0,
             firstBallTouched: "",
             pocketedBalls: [],
         }
-        document.querySelector(".turn-info").innerText = `${players[0].name} Turn, ${players[0].ball}`;
+        updateUITurn(players[0]);
     }
     
     start = true;
@@ -588,14 +603,14 @@ function animate(){
                             firstBallTouched: "",
                             pocketedBalls: [],
                         }
-                        document.querySelector(".turn-info").innerText = `${players[1].name} Turn, ${players[1].ball}`;
+                        updateUITurn(players[1]);
                     }else if(turnDetail.turn == 1){
                         turnDetail = {
                             turn: 0,
                             firstBallTouched: "",
                             pocketedBalls: [],
                         }
-                        document.querySelector(".turn-info").innerText = `${players[0].name} Turn, ${players[0].ball}`;
+                        updateUITurn(players[0]);
                     }
                 }else{
                     if(firstBreak == false){
@@ -632,14 +647,14 @@ function animate(){
                             firstBallTouched: "",
                             pocketedBalls: [],
                         }
-                        document.querySelector(".turn-info").innerText = `${players[1].name} Turn, ${players[1].ball}`;
+                        updateUITurn(players[1]);
                     }else if(turnDetail.turn == 0){
                         turnDetail = {
                             turn: 0,
                             firstBallTouched: "",
                             pocketedBalls: [],
                         }
-                        document.querySelector(".turn-info").innerText = `${players[0].name} Turn, ${players[0].ball}`;
+                        updateUITurn(players[0]);
                     }
                 }
                 
@@ -681,14 +696,14 @@ function animate(){
                         firstBallTouched: "",
                         pocketedBalls: [],
                     }
-                    document.querySelector(".turn-info").innerText = `${players[1].name} Turn, ${players[1].ball}`;
+                    updateUITurn(players[1]);
                 }else if(turnDetail.turn == 1){
                     turnDetail = {
                         turn: 0,
                         firstBallTouched: "",
                         pocketedBalls: [],
                     }
-                    document.querySelector(".turn-info").innerText = `${players[0].name} Turn, ${players[0].ball}`;
+                    updateUITurn(players[0]);
                 }
             }
             if(firstBreak== true){
