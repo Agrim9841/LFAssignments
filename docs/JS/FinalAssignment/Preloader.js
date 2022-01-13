@@ -79,6 +79,11 @@ stickImage.onload = function(){
     assetsLoadingLeft--;
 }
 
+let strikeAudio = new Audio("./audio/assets_sounds_BallsCollide-old1.wav");
+let sideAudio = new Audio("./audio/assets_sounds_Side.mp3");
+let pocketAudio = new Audio("./audio/assets_sounds_Hole.wav");
+
+
 let checkPreloader = setInterval(() => {
     if(assetsLoadingLeft === 0){
         clearInterval(checkPreloader);

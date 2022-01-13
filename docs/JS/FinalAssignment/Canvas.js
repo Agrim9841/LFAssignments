@@ -176,7 +176,6 @@ function drawGuide(){
 function collisionAlgorithm(ball1, ball2){
     let dist = calcDistance(ball1.xPosition, ball1.yPosition, ball2.xPosition, ball2.yPosition);     
     if(dist < (ball1.radius + ball2.radius)){
-
         // find minimun translation distance
         let mtdx = ((ball1.xPosition - ball2.xPosition) * (ball1.radius * 2 - dist))/dist;
         let mtdy = ((ball1.yPosition - ball2.yPosition) * (ball1.radius * 2 - dist))/dist;
@@ -188,57 +187,35 @@ function collisionAlgorithm(ball1, ball2){
         ball2.xPosition = ball2.xPosition - (mtdx/2);
         ball2.yPosition = ball2.yPosition - (mtdy/2);
 
-        // unit normal vector
-        let xNormal = (ball2.xPosition - ball1.xPosition) / dist;
-        let yNormal = (ball2.yPosition - ball1.yPosition) / dist;
+        let power = (Math.abs(ball1.xSpeed) + Math.abs(ball1.ySpeed)) + 
+                    (Math.abs(ball2.xSpeed) + Math.abs(ball2.ySpeed));
 
-        // unit tangent vector
-        let xTangent = -yNormal;
-        let yTangent = xNormal;
-
-        // project velocities onto unit normal and unit tangent vectors
-        let v1Normal = xNormal * ball1.xSpeed + yNormal * ball1.ySpeed;
-        let v1Tangent = xTangent * ball1.xSpeed + yTangent * ball1.ySpeed;
-
-        let v2Normal = xNormal * ball2.xSpeed + yNormal * ball2.ySpeed;
-        let v2Tangent = xTangent * ball2.xSpeed + yTangent * ball2.ySpeed;
-
-
-        // new normal velocities
-        let v1NTag = v2Normal;
-        let v2NTag = v1Normal;
-
-        //convert the scalar normal and tangential velocity into vectors
-        let xV1NTag = xNormal * v1NTag;
-        let yV1NTag = yNormal * v1NTag;
+        let strikeAudioCopy = strikeAudio.cloneNode();
+        strikeAudioCopy.volume = power / 100;
+        strikeAudioCopy.play();
         
-        let xV1TTag = xTangent * v1Tangent;
-        let yV1TTag = yTangent * v1Tangent;
-        
-        let xV2NTag = xNormal * v2NTag;
-        let yV2NTag = yNormal * v2NTag;
-        
-        let xV2TTag = xTangent * v2Tangent;
-        let yV2TTag = yTangent * v2Tangent;
+        power = power * 0.00482;
 
-        // update velocities
-        ball1.xSpeed = xV1TTag + xV1NTag;
-        ball1.ySpeed = yV1TTag + yV1NTag;
-        ball1.xSpeed = ball1.xSpeed * (0.98 ** 3);
-        ball1.ySpeed = ball1.ySpeed * (0.98 ** 3);
-        while(Math.abs(ball1.xSpeed) > 30 || Math.abs(ball1.ySpeed) > 30){
-            ball1.xSpeed = ball1.xSpeed * (0.98 ** 3);
-            ball1.ySpeed = ball1.ySpeed * (0.98 ** 3);
-        }
-        
-        ball2.xSpeed = xV2TTag + xV2NTag;
-        ball2.ySpeed = yV2TTag + yV2NTag;
-        ball2.xSpeed = ball2.xSpeed * (0.98 ** 3);
-        ball2.ySpeed = ball2.ySpeed * (0.98 ** 3);
-        while(Math.abs(ball2.xSpeed) > 30 || Math.abs(ball2.ySpeed) > 30){
-            ball2.xSpeed = ball2.xSpeed * (0.98 ** 3);
-            ball2.ySpeed = ball2.ySpeed * (0.98 ** 3);
-        }
+        let opposite = ball1.yPosition - ball2.yPosition;
+        let adjacent = ball1.xPosition - ball2.xPosition;
+        let rotation = Math.atan2(opposite, adjacent);
+
+        let newxSpeed = 90 * Math.cos(rotation + Math.PI) * power;
+        let newySpeed = 90 * Math.sin(rotation + Math.PI) * power;
+
+        ball2.xSpeed += newxSpeed;
+        ball2.ySpeed += newySpeed;
+
+        newxSpeed = 90 * Math.cos(rotation) * power;
+        newySpeed = 90 * Math.sin(rotation) * power;
+
+        ball1.xSpeed += newxSpeed;
+        ball1.ySpeed += newySpeed;
+
+        ball1.xSpeed *= 0.98;
+        ball1.ySpeed *= 0.98;
+        ball2.xSpeed *= 0.98;
+        ball2.ySpeed *= 0.98;
 
         ball1.moving = true;
         ball2.moving = true;
@@ -273,6 +250,12 @@ function checkBallCollision(){
 
 }
 
+function playSideAudio(power){
+    let sideAudioCopy = sideAudio.cloneNode();
+    sideAudioCopy.volume = power / 50;
+    sideAudioCopy.play();
+}
+
 function checkWallCollision(){
     if(!cue.pocketing || !cue.pocketed){
         if(cue.xPosition < (tableBorderWidth + cue.radius)){
@@ -280,21 +263,25 @@ function checkWallCollision(){
             cue.xSpeed = -cue.xSpeed;
             cue.xSpeed = cue.xSpeed * (0.98 ** 3);
             cue.ySpeed = cue.ySpeed * (0.98 ** 3);
+            playSideAudio(Math.abs(cue.xSpeed) + Math.abs(cue.ySpeed));
         }if(cue.xPosition > (table.width - tableBorderWidth - cue.radius)){
             cue.xPosition = table.width - tableBorderWidth - cue.radius;
             cue.xSpeed = -cue.xSpeed;
             cue.xSpeed = cue.xSpeed * (0.98 ** 3);
             cue.ySpeed = cue.ySpeed * (0.98 ** 3);
+            playSideAudio(Math.abs(cue.xSpeed) + Math.abs(cue.ySpeed));
         }if(cue.yPosition < (tableBorderWidth + cue.radius)){
             cue.yPosition = tableBorderWidth + cue.radius;
             cue.ySpeed = -cue.ySpeed;
             cue.xSpeed = cue.xSpeed * (0.98 ** 3);
             cue.ySpeed = cue.ySpeed * (0.98 ** 3);
+            playSideAudio(Math.abs(cue.xSpeed) + Math.abs(cue.ySpeed));
         }if(cue.yPosition > (table.height - tableBorderWidth - cue.radius)){
             cue.yPosition = table.height - tableBorderWidth - cue.radius;
             cue.ySpeed = -cue.ySpeed;
             cue.xSpeed = cue.xSpeed * (0.98 ** 3);
             cue.ySpeed = cue.ySpeed * (0.98 ** 3);
+            playSideAudio(Math.abs(cue.xSpeed) + Math.abs(cue.ySpeed));
         }
     }
     for(let i=0; i < balls.length; i++){
@@ -304,21 +291,25 @@ function checkWallCollision(){
                 balls[i].xSpeed = -balls[i].xSpeed;
                 balls[i].xSpeed = balls[i].xSpeed * (0.98 ** 3);
                 balls[i].ySpeed = balls[i].ySpeed * (0.98 ** 3);
+                playSideAudio(Math.abs(balls[i].xSpeed) + Math.abs(balls[i].ySpeed));
             }if(balls[i].xPosition > (table.width - tableBorderWidth - balls[i].radius)){
                 balls[i].xPosition = table.width - tableBorderWidth - balls[i].radius;
                 balls[i].xSpeed = -balls[i].xSpeed;
                 balls[i].xSpeed = balls[i].xSpeed * (0.98 ** 3);
                 balls[i].ySpeed = balls[i].ySpeed * (0.98 ** 3);
+                playSideAudio(Math.abs(balls[i].xSpeed) + Math.abs(balls[i].ySpeed));
             }if(balls[i].yPosition < (tableBorderWidth + balls[i].radius)){
                 balls[i].yPosition = tableBorderWidth + balls[i].radius;
                 balls[i].ySpeed = -balls[i].ySpeed;
                 balls[i].xSpeed = balls[i].xSpeed * (0.98 ** 3);
                 balls[i].ySpeed = balls[i].ySpeed * (0.98 ** 3);
+                playSideAudio(Math.abs(balls[i].xSpeed) + Math.abs(balls[i].ySpeed));
             }if(balls[i].yPosition > (table.height - tableBorderWidth - balls[i].radius)){
                 balls[i].yPosition = table.height - tableBorderWidth - balls[i].radius;
                 balls[i].ySpeed = -balls[i].ySpeed;
                 balls[i].xSpeed = balls[i].xSpeed * (0.98 ** 3);
                 balls[i].ySpeed = balls[i].ySpeed * (0.98 ** 3);
+                playSideAudio(Math.abs(balls[i].xSpeed) + Math.abs(balls[i].ySpeed));
             }
         }
     }
@@ -533,8 +524,8 @@ function animate(){
             }else{
                 
                 if(mouse.pressed === true){
-                    if(stick.power >= 3300){
-                        stick.power = 3300;
+                    if(stick.power >= 4000){
+                        stick.power = 4000;
                     }else{
                         stick.pullDistance++;
                         stick.power += 50;
